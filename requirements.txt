@@ -18,6 +18,7 @@ google-auth==1.6.2
 google-cloud-vision==0.35.2
 googleapis-common-protos==1.5.8
 grpcio==1.18.0
+gunicorn==19.9.0
 h5py==2.9.0
 idna==2.8
 itsdangerous==1.1.0

@@ -13,6 +13,7 @@ from pgmpy.inference import VariableElimination
 from pgmpy.factors.discrete import TabularCPD
 from sklearn.preprocessing import normalize
 from copy import deepcopy
+import os
 
 classes = {0: 'Positive', 1: 'Negative', 2: 'Neutral'}
 reverse_classes = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
@@ -20,7 +21,7 @@ reverse_classes = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
 def load_model():
     # ### 1.2 Prepare and read the labels histogram file
     # Assign the file to a variable
-    labels_histogram = '../labels_histogram.xlsx'
+    labels_histogram = os.getcwd() + '/app/labels_histogram.xlsx'
 
     # Read the file using pandas' as a dataframe
     # sheet_name specifies the sheet to read

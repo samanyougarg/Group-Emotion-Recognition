@@ -133,8 +133,8 @@ def preprocess_google(image_file):
 # ### 2. Using OpenCV DNN
 
 # #### 2.1 Load the serialized model from disk
-net = cv2.dnn.readNetFromCaffe('../deploy.prototxt.txt',
-                               '../res10_300x300_ssd_iter_140000.caffemodel'
+net = cv2.dnn.readNetFromCaffe(os.getcwd() + '/app/deploy.prototxt.txt',
+                               os.getcwd() + '/app/res10_300x300_ssd_iter_140000.caffemodel'
                                )
 
 
@@ -265,7 +265,7 @@ def resize_faces(cropped_images_path, scaled_images_path, size):
         cv2.imwrite(scaled_images_path + image_name, resized)
 
 # #### 3.5 Function to align the faces
-align_dlib = AlignDlib('../shape_predictor_68_face_landmarks.dat')
+align_dlib = AlignDlib(os.getcwd() + '/app/shape_predictor_68_face_landmarks.dat')
 
 def align_faces(scaled_images_path, aligned_images_path):
     count = 1

@@ -1,21 +1,21 @@
 from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array, load_img
 import numpy as np
-import glob
+import glob, os
 import cv2
 
 classes = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
 
 def load_model():
     # read the model json file
-    json_file = open('../model.json', 'r')
+    json_file = open(os.getcwd() + "/app/model.json", 'r')
     loaded_model_json = json_file.read()
     json_file.close()
 
     # load the model from json file
     model = model_from_json(loaded_model_json)
     # load weights into new model
-    model.load_weights("../model.h5")
+    model.load_weights(os.getcwd() + "/app/model.h5")
 
     print("Loaded CNN model from disk")
 
