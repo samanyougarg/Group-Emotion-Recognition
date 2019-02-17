@@ -2,69 +2,357 @@
 
 {% block content %}
 
-<body>
-  <nav class="navbar navbar-transparent navbar-color-on-scroll fixed-top navbar-expand-lg" color-on-scroll="100" id="sectionsNav">
-    <div class="container">
-      <div class="navbar-translate">
-        <a class="navbar-brand" href="/">
-          RadhaKrishna </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link">
-              <i class="material-icons">cloud_download</i> Download
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://twitter.com/CreativeTim" target="_blank" data-original-title="Follow us on Twitter">
-              <i class="fa fa-twitter"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.facebook.com/CreativeTim" target="_blank" data-original-title="Like us on Facebook">
-              <i class="fa fa-facebook-square"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" rel="tooltip" title="" data-placement="bottom" href="https://www.instagram.com/CreativeTimOfficial" target="_blank" data-original-title="Follow us on Instagram">
-              <i class="fa fa-instagram"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="page-header header-filter clear-filter purple-filter" data-parallax="true" style="background-image: url('/static/images/bg2.jpg');">
+  <div class="page-header header-filter clear-filter purple-filter" data-parallax="true" style="background-image: url('/static/images/background.jpg');">
     <div class="container">
       <div class="row">
         <div class="col-md-8 ml-auto mr-auto">
           <div class="brand">
-            <h1>Material Kit.</h1>
-            <h3>A Badass Bootstrap 4 UI Kit based on Material Design.</h3>
+            <div class="tim-typo">
+              <h1 class="title">RADHA KRISHNA</h1>
+            </div>
+            <h3 style="text-align: center;">Radha Krishna Hanuman</h3>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="main main-raised">
+  <div class="main main-raised" style="overflow: hidden;">
+
+    <div class="section section-basic">
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <div class="col-md-12">
+          <div class="alert alert-primary">
+            <div class="container">
+              <div class="alert-icon">
+                <i class="material-icons">info_outline</i>
+              </div>
+              <b>Please Upload an Image or Select from our collection below</b>
+            </div>
+          </div>
+        </div></div>
+
+        <div class="row justify-content-center align-items-center">
+          <div class="col-md-4 col-md-offset-1">
+            <form id="upload_image" method="post" enctype="multipart/form-data">
+              {{ form.hidden_tag() }}
+              <div class="file-upload">
+                <div class="image-upload-wrap">
+                  <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" id="image" name="image"/>
+                  <div class="drag-text">
+                    <h3>Drop image here or click to upload</h3>
+                  </div>
+                </div>
+              </div>
+          </div>
+ 
+          <div class="col-md-4 col-md-offset-1">
+            <div class="card card-raised card-carousel">
+              <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="3000">
+                <ol class="carousel-indicators">
+                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+                  <li data-target="#carouselExampleIndicators" data-slide-to="8"></li>
+                </ol>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <a onclick="update_image('/static/images/image_happy_1.jpg')"> 
+                      <img class="d-block w-100" src="/static/images/image_happy_1.jpg" alt="First Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_happy_2.jpg')"> 
+                      <img class="d-block w-100" src="/static/images/image_happy_2.jpg" alt="Second Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_happy_neutral_1.jpg')"> 
+                      <img class="d-block w-100" src="/static/images/image_happy_neutral_1.jpg" alt="Third Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_happy_neutral_2.jpg')">
+                      <img class="d-block w-100" src="/static/images/image_happy_neutral_2.jpg" alt="Fourth Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_neutral.jpg')">
+                      <img class="d-block w-100" src="/static/images/image_neutral.jpg" alt="Fifth Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_sad_1.jpg')">
+                      <img class="d-block w-100" src="/static/images/image_sad_1.jpg" alt="Sixth Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_happy_neutral_3.jpg')">
+                      <img class="d-block w-100" src="/static/images/image_happy_neutral_3.jpg" alt="Seventh Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_happy_neutral_4.jpg')">
+                      <img class="d-block w-100" src="/static/images/image_happy_neutral_4.jpg" alt="Eighth Image">
+                    </a>
+                  </div>
+                  <div class="carousel-item">
+                    <a onclick="update_image('/static/images/image_neutral_sad.jpg')">
+                      <img class="d-block w-100" src="/static/images/image_neutral_sad.jpg" alt="Ninth Image">
+                    </a>
+                  </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                  <i class="material-icons">keyboard_arrow_left</i>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                  <i class="material-icons">keyboard_arrow_right</i>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top: 1rem;">
+          <div class="col-md-12">
+            <button class="btn btn-success btn-round btn-block" id="submit_btn" type="submit"><i class="material-icons">check_circle</i> Process Image </button>
+          </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    
+    <div class="section section-basic section-grey" id="emotions">
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <div class="col-md-10 ml-auto mr-auto">
+            <div class="card">
+              <div class="card-header card-header-primary" style="padding: 0rem 15px;">
+                <h3><b>INPUT IMAGE</b></h3>
+              </div>
+              <div class="card-body">
+                <img id="input_image" src="/static/images/image_happy_1.jpg" alt="Input Image" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+          <div class="col-md-2 ml-auto mr-auto">
+            <i class="fa fa-long-arrow-down" style="font-size: 5rem; color: #A62ABC;"></i>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-3 col-4">
+              <h4 class="text-success"><b>Positive</b></h4>
+              <div class="card">
+                <div class="card-body">
+                  <img src="/static/images/positive.png" alt="Positive" class="rounded img-fluid" style="margin-bottom: 1rem;">
+
+                  <div class="progress progress-line-success" style="height: 1rem;">
+                    <div id="progressbarpositive" class="progress-bar progress-bar-success" role="progressbar">
+                      <b></b>
+                    </div>
+                  </div>
+                  <h4 id="progresspositive" class="text-success"><b></b></h4>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-4 ml-auto">
+              <h4 class="text-warning"><b>Neutral</b></h4>
+              <div class="card">
+                <div class="card-body">
+                  <img src="/static/images/neutral.png" alt="Neutral" class="rounded img-fluid" style="margin-bottom: 1rem;">
+
+                  <div class="progress progress-line-warning" style="height: 1rem;">
+                    <div id="progressbarneutral" class="progress-bar progress-bar-warning" role="progressbar">
+                      <b></b>
+                    </div>
+                  </div>
+                  <h4 id="progressneutral" class="text-warning"><b></b></h4>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 col-4 ml-auto">
+              <h4 class="text-danger"><b>Negative</b></h4>
+              <div class="card">
+                <div class="card-body">
+                  <img src="/static/images/negative.png" alt="Negative" class="rounded img-fluid" style="margin-bottom: 1rem;">
+
+                  <div class="progress progress-line-danger" style="height: 1rem;">
+                    <div id="progressbarnegative" class="progress-bar progress-bar-danger" role="progressbar">
+                      <b></b>
+                    </div>
+                  </div>
+                  <h4 id="progressnegative" class="text-danger"><b></b></h4>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="section section-basic section-grey" id="predictions">
+      <div class="container text-center">
+        <h2>PREDICTIONS</h2>
+        <div class="row">
+
+          <div class="col-md-5">
+            <h4 class="text-primary"><b>CNN Only</b></h4>
+            <table class="table table-dark" id="cnn_table">
+              <thead>
+                <tr>
+                  <th>Emotion</th>
+                  <th>Probability</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-md-2 my-auto">
+            <i class="material-icons" style="font-size: 4rem; color: #A62ABC;">add_circle</i>
+          </div>
+
+          <div class="col-md-5">
+            <h4 class="text-primary"><b>Bayesian Network Only</b></h4>
+            <table class="table table-dark" id="bayesian_table">
+              <thead>
+                <tr>
+                  <th>Emotion</th>
+                  <th>Probability</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="row" style="margin-top: 2rem; margin-bottom: 2rem;">
+          <div class="col-md-2 ml-auto mr-auto">
+            <i class="fa fa-long-arrow-down" style="font-size: 6rem; color: #28A645;"></i>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 ml-auto mr-auto">
+            <h4 class="text-primary"><b>CNN + Bayesian Network</b></h4>
+            <table class="table table-dark" id="bayesian_cnn_table">
+              <thead>
+                <tr>
+                  <th>Emotion</th>
+                  <th>Probability</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="section section-basic">
       <div class="container">
-        <div class="title">
-          <h2>Basic Elements</h2>
+        <h2>ABOUT THIS PROJECT</h2>
+        <div class="row">
+          <div class="col-md-12">
+            <p>This project aims to classify a group’s perceived emotion as <font color='#28a745'>Positive</font>, <font color='#ffc107'>Neutral</font> or <font color='#dc3545'>Negative</font>. The dataset being used is the <a href="https://sites.google.com/view/emotiw2018">Group Affect Database 3.0</a> which contains "in the wild" photos of groups of people in various social environments.</p>
+
+            <h3 id="theneedforemotionrecognition">The Need for Emotion Recognition</h3>
+
+            <p>So, first of all, why do we need emotion recognition? </p>
+            <p>Emotion recognition is important -</p>
+
+            <ul>
+            <li>To improve the user’s experience, as a customer, learner, or as a generic service user.</li>
+
+            <li>Can help improve services without the need to formally and continuously ask the user for feedback.</li>
+
+            <li>Also, using automatic emotion recognition in public safety, healthcare, or assistive technology, can significantly improve the quality of people’s lives, allowing them to live in a safer environment or reducing the impact that disabilities or other health conditions have.</li>
+            </ul>
+
+            <h3 id="applicationsofemotionrecognition">Applications of Emotion Recognition</h3>
+
+            <p>Emotion Recognition has applications in crowd analytics, social media, marketing, event detection and summarization, public safety, human-computer interaction, digital security surveillance, street analytics, image retrieval, etc.</p>
+
+            <h3 id="theriseofgroupemotionrecognition">The rise of Group Emotion Recognition</h3>
+
+            <p>The problem of emotion recognition for a group of people has been less extensively studied, but it is gaining popularity due to the massive amount of data available on social networking sites containing images of groups of people participating in social events.</p>
+
+            <h3 id="challengesfacinggroupemotionrecognition">Challenges facing Group Emotion Recognition</h3>
+
+            <p>Group emotion recognition is a challenging problem due to obstructions like head and body pose variations, occlusions, variable lighting conditions, variance of actors, varied indoor and outdoor settings and image quality.</p>
+
+            <h3 id="approach">Approach</h3>
+
+            <p>My approach is based on the research paper "<a href="https://arxiv.org/abs/1709.03820">Emotion Recognition in the Wild using Deep Neural Networks and Bayesian Classifiers</a>." So, the model is basically a novel combination of deep neural networks and Bayesian classifiers. The neural network works from the bottom to the top, analysing emotions expressed by isolated faces. The Bayesian classifier estimates a global emotion integrating top-down features obtained through a scene descriptor.</p>
+
+            <br>
+
+            <div class="col-md-8 px-0 ml-auto mr-auto">
+              <img class="img-fluid" src="/static/images/method.jpg" alt="Approach">
+            </div>
+
+            <br>
+
+            <h4 id="topdownapproach">Top-down approach</h4>
+
+            <p><strong>Top-down approach</strong> considers the scene context, such as background, clothes, place, etc. It consists of the following steps –</p>
+
+            <ol>
+            <li><p>Acquiring the scene descriptors</p></li>
+
+            <li><p>Setting evidences in the Bayesian Network</p></li>
+
+            <li><p>Estimating the posterior distribution of the Bayesian Network</p></li>
+            </ol>
+
+            <h4 id="bottomupapproach">Bottom-up approach</h4>
+
+            <p><strong>Bottom-up approach</strong> estimates the facial expressions of each person in the group –</p>
+
+            <ol>
+            <li><p>Face detection</p></li>
+
+            <li><p>Features pre-processing</p></li>
+
+            <li><p>CNN forward pass</p></li>
+            </ol>
+
+            <p>The value obtained by the bottom-up module is then used as input to the Bayesian Network in the top layer.</p>
+
+          </div>
         </div>
-        
+      </div>
+    </div>
+
+    <div class="section section-basic section-grey" style="padding-top: 1rem;">
+      <div class="container">
         <div class="sharing-area text-center">
           <div class="row justify-content-center">
             <h3>Thank you for supporting us!</h3>
           </div>
-          <a id="github" href="https://github.com/creativetimofficial/material-kit" target="_blank" class="btn btn-raised btn-github">
+          <a id="github" href="https://github.com/samanyougarg/Group-Emotion-Recognition" target="_blank" class="btn btn-raised btn-github">
             <i class="fa fa-github"></i> Star
           </a>
         </div>
@@ -77,24 +365,252 @@
       <nav class="float-left">
         <ul>
           <li>
-            <a href="https://bhagavadgita.io">
-              Bhagavad Gita
-            </a>
-          </li>
-          <li>
-            <a href="https://creative-tim.com/presentation">
-              About Us
+            <a href="https://samanyougarg.com">
+              Samanyou Garg
             </a>
           </li>
         </ul>
       </nav>
       <div class="copyright float-right">
-        &copy;
-        <script>
-          document.write(new Date().getFullYear())
-        </script>, made with <i class="material-icons">favorite</i> by
-        <a href="https://bhagavadgita.io" target="_blank">Radha Krishna.</a>
+        Made with <i class="material-icons">favorite</i> by
+        <a href="https://samanyougarg.com" target="_blank">Samanyou Garg</a>
       </div>
     </div>
   </footer>
+
+  <style>
+    #input_image{
+      width: 100%;
+      height: 30vw;
+      object-fit: cover;
+    }
+
+    h1, h2, h3, h4, p, li {
+      font-weight:400;
+    }
+
+    p, li {
+      font-size: 1rem;
+    }
+
+    .bg-positive {
+      background-color: #28a745;
+    }
+
+    .bg-neutral {
+      background-color: #ffc107;
+    }
+
+    .bg-negative {
+      background-color: #dc3545;
+    }
+
+    .section-grey {
+      background: #EEEEEE;
+    }
+
+    @media (min-width: 768px) and (max-width: 991.98px) {
+      .carousel-inner{
+        width: 200%;
+      }
+      .carousel-control-next {
+        margin-right: 1rem;
+      }
+      .carousel-control-prev {
+        margin-right: 1rem;
+      }
+    }
+
+    @media (min-width: 992px) and (max-width: 1199.98px) {
+      .carousel-inner{
+        width: 120%;
+      }
+      .carousel-control-next {
+        margin-right: 1rem;
+      }
+      .carousel-control-prev {
+        margin-right: 1rem;
+      }
+    }
+
+    .file-upload {
+      background-color: #ffffff;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .file-upload-btn {
+      width: 100%;
+      margin: 0;
+      color: #fff;
+      background: #1FB264;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      border-bottom: 4px solid #9C27B0;
+      transition: all .2s ease;
+      outline: none;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .file-upload-btn:hover {
+      background: #1AA059;
+      color: #ffffff;
+      transition: all .2s ease;
+      cursor: pointer;
+    }
+
+    .file-upload-btn:active {
+      border: 0;
+      transition: all .2s ease;
+    }
+
+    .file-upload-content {
+      display: none;
+      text-align: center;
+    }
+
+    .file-upload-input {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      outline: none;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .image-upload-wrap {
+      margin-top: 20px;
+      border: 4px dashed #9C27B0;
+      position: relative;
+    }
+
+    .image-dropping,
+    .image-upload-wrap:hover {
+      background-color: #E1BEE7;
+      border: 4px dashed #ffffff;
+    }
+
+    .image-title-wrap {
+      padding: 0 15px 15px 15px;
+      color: #222;
+    }
+
+    .drag-text {
+      text-align: center;
+      margin: 0.1rem;
+    }
+
+    .drag-text h3 {
+      font-weight: 100;
+      text-transform: uppercase;
+      color: #9C27B0;
+      padding: 2.3rem 0;
+    }
+
+    #predictions {
+      display: none;
+    }
+    
+  </style>
+
+  <script type='text/javascript'>
+    var image_set = "/static/images/image_happy_1.jpg";
+    $('#image').on('input', function() {
+      if(this.files[0].size > 2097152){
+        alert("File is too big!");
+        this.value = "";
+      } else {
+        var reader = new FileReader();
+        reader.onload = function () {
+          var output = document.getElementById('input_image');
+          output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+      }
+    });
+
+    function update_image(image_url) {
+      var output = document.getElementById('input_image');
+      output.src = image_url;
+      image_set = image_url;
+    }
+
+    function updateProgress(emotion, percentage) {
+      if (percentage > 100) percentage = 100;
+      $('#progressbar' + emotion).css('width', percentage.toFixed(2) + '%');
+      $('#progress' + emotion).text(percentage.toFixed(2) + '%');
+    }
+
+    $(function() {
+        $('#submit_btn').click(function() {
+            event.preventDefault();
+            var form_data = new FormData($('#upload_image')[0]);
+            form_data.append('image_set', image_set);
+            $.LoadingOverlay("show", {
+                image       : "",
+                fontawesome : "fa fa-cog fa-spin"
+            });
+            $.ajax({
+                type: 'POST',
+                url: '/process-image/',
+                data: form_data,
+                contentType: false,
+                processData: false,
+                dataType: 'json'
+            }).done(function(data, textStatus, jqXHR) {
+                $.LoadingOverlay("hide");
+
+                $("#bayesian_table > tbody").html("");
+                jQuery.each(data[0], function (key, val) {
+                  var markup = "<tr class='bg-" + key.toLowerCase() + "'><td><b>" + key + "</b></td><td><b>" + val + "</b></td></tr>";
+                  $("#bayesian_table tbody").append(markup);
+                });
+
+                $("#cnn_table > tbody").html("");
+                jQuery.each(data[1], function (key, val) {
+                  var markup = "<tr class='bg-" + key.toLowerCase() + "'><td><b>" + key + "</b></td><td><b>" + val.toFixed(4) + "</b></td></tr>";
+                  $("#cnn_table tbody").append(markup);
+                });
+
+                $("#bayesian_cnn_table > tbody").html("");
+                jQuery.each(data[2], function (key, val) {
+                  updateProgress(key.toLowerCase(), val * 100);
+                  var markup = "<tr class='bg-" + key.toLowerCase() + "'><td><b>" + key + "</b></td><td><b>" + val + "</b></td></tr>";
+                  $("#bayesian_cnn_table tbody").append(markup);
+                });
+                
+                if ($("#predictions").is(":visible")) {
+                } else {
+                  $('#predictions').show();
+                }
+
+                $('html, body').animate({
+                  scrollTop: $("#emotions").offset().top
+                }, 2000);
+                
+            }).fail(function(data) {
+                alert('error!');
+            });
+        });
+    });
+
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('.file-upload-image').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+
+      }
+    }
+
+  </script>
 {% endblock %}

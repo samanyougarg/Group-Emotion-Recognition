@@ -2,18 +2,17 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_assets import Environment
-from flask_wtf import CsrfProtect
+from flask_wtf import CSRFProtect
 from flask_compress import Compress
 
 from config import config
-from .assets import app_css, app_js, vendor_css, vendor_js
+from .assets import app_css, vendor_css, vendor_js
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 db = SQLAlchemy()
-csrf = CsrfProtect()
 compress = Compress()
-csrf = CsrfProtect()
+csrf = CSRFProtect()
 
 
 def create_app(config_name):
@@ -42,7 +41,6 @@ def create_app(config_name):
     assets_env.url_expire = True
 
     assets_env.register('app_css', app_css)
-    assets_env.register('app_js', app_js)
     assets_env.register('vendor_css', vendor_css)
     assets_env.register('vendor_js', vendor_js)
 
@@ -54,5 +52,8 @@ def create_app(config_name):
     # Create app blueprints
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
+
+    from .main.views import load_models
+    load_models()
 
     return app
