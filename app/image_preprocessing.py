@@ -248,7 +248,6 @@ def resize_faces(cropped_images_path, scaled_images_path, size):
     count = 1
     # for each image in the cropped images path
     for file in glob.glob(cropped_images_path+"*.jpg"):
-        current_app.logger.info(file)
         # read the image
         image = cv2.imread(file)
         # get the height and width of the image

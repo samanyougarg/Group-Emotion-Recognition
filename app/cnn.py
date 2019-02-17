@@ -3,7 +3,6 @@ from keras.preprocessing.image import img_to_array, load_img
 import numpy as np
 import glob, os
 import cv2
-from flask import current_app
 
 classes = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
 
@@ -54,7 +53,6 @@ def predict_image(model, input_path, image_path):
     predictions_list = []
 
     for face_image in glob.glob(input_path + "*.jpg"):
-        current_app.logger.info(face_image)
         face_image_name = (face_image.split("/")[-1])[:-4]
         # if face is from the current image
         if (image_name + "_face" in face_image_name):
@@ -65,7 +63,7 @@ def predict_image(model, input_path, image_path):
         
     # mean of the predicted probabilities for each face in the image
     mean_probabilities_for_image = np.mean(predictions_list, axis=0)
-    current_app.logger.info(mean_probabilities_for_image)
+    print(mean_probabilities_for_image)
     emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
     emotion_dict['Positive'] = float(round(mean_probabilities_for_image[0][2], 4))
     emotion_dict['Negative'] = float(round(mean_probabilities_for_image[0][0], 4))
