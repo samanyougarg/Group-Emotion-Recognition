@@ -12,6 +12,7 @@ from pgmpy.models import BayesianModel
 from pgmpy.inference import VariableElimination
 from pgmpy.factors.discrete import TabularCPD
 from sklearn.preprocessing import normalize
+from copy import deepcopy
 
 classes = {0: 'Positive', 1: 'Negative', 2: 'Neutral'}
 reverse_classes = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
@@ -19,7 +20,7 @@ reverse_classes = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
 def load_model():
     # ### 1.2 Prepare and read the labels histogram file
     # Assign the file to a variable
-    labels_histogram = 'labels_histogram.xlsx'
+    labels_histogram = '../labels_histogram.xlsx'
 
     # Read the file using pandas' as a dataframe
     # sheet_name specifies the sheet to read
@@ -178,16 +179,35 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
     # if detected label is present in labels list then set that label to 1 else 0
     label_evidences = {label:(1 if label in labels_for_image else 0) for label in labels_list}
 
-    if cnn_prediction is not None:
-        # get prediction from CNN
-        label_evidences['CNN'] = reverse_classes[cnn_prediction]
-
     # #### 4.2 Initialize Variable Elimination and query
     # Set the inference method
     emotion_infer = VariableElimination(model)
 
     # Compute the probability of the emotions given the detected labels list
     q = emotion_infer.query(['Emotion'], evidence=label_evidences)
-    # print(q['Emotion'])
+    print(q['Emotion'])
 
-    return classes[np.argmax(q['Emotion'].values)]
+    emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
+    emotion_cnn_dict = deepcopy(emotion_dict)
+    emotion_preds = q['Emotion'].values
+    emotion_dict['Positive'] = round(emotion_preds[0], 4)
+    emotion_dict['Negative'] = round(emotion_preds[1], 4)
+    emotion_dict['Neutral'] = round(emotion_preds[2], 4)
+
+    if cnn_prediction is not None:
+        # get prediction from CNN
+        label_evidences['CNN'] = reverse_classes[cnn_prediction]
+        emotion_infer = VariableElimination(model)
+
+        # Compute the probability of the emotions given the detected labels list
+        q = emotion_infer.query(['Emotion'], evidence=label_evidences)
+        print(q['Emotion'])
+
+        emotion_preds = q['Emotion'].values
+        emotion_cnn_dict['Positive'] = round(emotion_preds[0], 4)
+        emotion_cnn_dict['Negative'] = round(emotion_preds[1], 4)
+        emotion_cnn_dict['Neutral'] = round(emotion_preds[2], 4)
+
+        return classes[np.argmax(emotion_preds)], emotion_dict, emotion_cnn_dict
+
+    return classes[np.argmax(emotion_preds)], emotion_dict, None

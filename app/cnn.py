@@ -8,14 +8,14 @@ classes = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
 
 def load_model():
     # read the model json file
-    json_file = open('model.json', 'r')
+    json_file = open('../model.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
 
     # load the model from json file
     model = model_from_json(loaded_model_json)
     # load weights into new model
-    model.load_weights("model.h5")
+    model.load_weights("../model.h5")
 
     print("Loaded CNN model from disk")
 
@@ -63,6 +63,11 @@ def predict_image(model, input_path, image_path):
         
     # mean of the predicted probabilities for each face in the image
     mean_probabilities_for_image = np.mean(predictions_list, axis=0)
+    print(mean_probabilities_for_image)
+    emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
+    emotion_dict['Positive'] = float(round(mean_probabilities_for_image[0][2], 4))
+    emotion_dict['Negative'] = float(round(mean_probabilities_for_image[0][0], 4))
+    emotion_dict['Neutral'] = float(round(mean_probabilities_for_image[0][1], 4))
 
     # predicted class for the image i.e. class with the highest probabilities
-    return classes[np.argmax(mean_probabilities_for_image)]
+    return classes[np.argmax(mean_probabilities_for_image)], emotion_dict

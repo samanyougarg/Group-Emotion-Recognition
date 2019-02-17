@@ -6,7 +6,7 @@ import os
 from PIL import Image
 import glob
 import numpy as np
-from AlignDlib import AlignDlib
+from .AlignDlib import AlignDlib
 import io
 
 # ## Face and Label Detection
@@ -133,8 +133,8 @@ def preprocess_google(image_file):
 # ### 2. Using OpenCV DNN
 
 # #### 2.1 Load the serialized model from disk
-net = cv2.dnn.readNetFromCaffe('deploy.prototxt.txt',
-                               'res10_300x300_ssd_iter_140000.caffemodel'
+net = cv2.dnn.readNetFromCaffe('../deploy.prototxt.txt',
+                               '../res10_300x300_ssd_iter_140000.caffemodel'
                                )
 
 
@@ -230,7 +230,7 @@ def extract_faces(image_file, cropped_images_path):
     
     # apply face detection
     faces = detector(image, 1)
-    
+
     # loop over detected faces
     for face in faces:
         # crop the image
@@ -265,7 +265,7 @@ def resize_faces(cropped_images_path, scaled_images_path, size):
         cv2.imwrite(scaled_images_path + image_name, resized)
 
 # #### 3.5 Function to align the faces
-align_dlib = AlignDlib('shape_predictor_68_face_landmarks.dat')
+align_dlib = AlignDlib('../shape_predictor_68_face_landmarks.dat')
 
 def align_faces(scaled_images_path, aligned_images_path):
     count = 1
@@ -281,9 +281,11 @@ def align_faces(scaled_images_path, aligned_images_path):
         bb = align_dlib.getLargestFaceBoundingBox(image)
         # align the face
         aligned = align_dlib.align(64, image, bb, landmarkIndices=AlignDlib.INNER_EYES_AND_BOTTOM_LIP)
+
+        image_name = (file.split("/")[-1])
+        
         # if aligned
         if aligned is not None:
-            image_name = (file.split("/")[-1])
             # save the image in the aligned images directory
             cv2.imwrite(aligned_images_path + image_name, aligned)
         else:
@@ -292,13 +294,13 @@ def align_faces(scaled_images_path, aligned_images_path):
 
 
 # #### 3.6 Apply preprocessing to the dataset using the functions above
-def preprocess(image_file):
+def preprocess(data_dir, image_file):
     # detect and crop faces in the image
-    extract_faces(image_file, "test/Faces/")
+    extract_faces(image_file, data_dir + "Faces/")
     # resize the cropped faces and save in "Scaled" directory
-    resize_faces("test/Faces/", "test/Scaled/", 64)
+    resize_faces(data_dir + "Faces/", data_dir + "Scaled/", 64)
     # align the scaled faces and save in "Aligned" directory
-    align_faces("test/Scaled/", "test/Aligned/")
+    align_faces(data_dir + "Scaled/", data_dir + "Aligned/")
 
 
 
