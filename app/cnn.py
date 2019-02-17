@@ -65,7 +65,7 @@ def predict_image(model, input_path, image_path):
         
     # mean of the predicted probabilities for each face in the image
     mean_probabilities_for_image = np.mean(predictions_list, axis=0)
-    print(mean_probabilities_for_image)
+    current_app.logger.info(mean_probabilities_for_image)
     emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
     emotion_dict['Positive'] = float(round(mean_probabilities_for_image[0][2], 4))
     emotion_dict['Negative'] = float(round(mean_probabilities_for_image[0][0], 4))
