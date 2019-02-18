@@ -1,0 +1,65 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.1'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+    maven { url "https://jitpack.io" }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        applicationId "com.hanuman.emotionrecognition"
+        minSdkVersion 20
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                onesignal_app_id: '',
+                onesignal_google_project_number: 'REMOTE'
+        ]
+    }
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    repositories {
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+    buildTypes {
+        release {
+//            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.google.firebase:firebase-core:16.0.7'
+    implementation 'com.github.delight-im:Android-AdvancedWebView:v3.2.0'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'io.github.kobakei:ratethisapp:1.2.0'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.onesignal:OneSignal:3.10.5'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+}
+
+apply plugin: 'com.google.gms.google-services'

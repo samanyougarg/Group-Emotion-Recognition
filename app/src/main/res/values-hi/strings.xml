@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="offline_heading">आप ऑफलाइन हैं।</string>
+    <string name="offline_description">पुनः प्रयास करने के लिए यहां टैप करें!</string>
+    <string name="noapp_description">इस उपकरण पर कोई ऐप इस क्रिया को पूरा नहीं कर सकती है।</string>
+    <string name="noapp_heading">ऐप नहीं मिला</string>
+</resources>
