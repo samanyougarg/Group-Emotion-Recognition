@@ -7,13 +7,13 @@ from . import cnn
 from . import bayesian_network
 from flask import current_app
 
-def classify_image(image_path, cnn_model, bayesian_model, labels_list):
+def classify_image(image_path, cnn_model, graph, bayesian_model, labels_list):
     # labels = image_preprocessing.detect_labels(image_path)
     labels = ["people", "tribe", "leisure", "fun", "temple", "vacation", "tradition", "happiness", "tourism", "travel"]
 
     image_preprocessing.preprocess(os.getcwd() + "/app/static/input/", image_path)
 
-    cnn_label, cnn_dict = cnn.predict_image(cnn_model, os.getcwd() + "/app/static/input/Aligned/", image_path)
+    cnn_label, cnn_dict = cnn.predict_image(cnn_model, graph, os.getcwd() + "/app/static/input/Aligned/", image_path)
 
     current_app.logger.info("CNN Label " + cnn_label)
 

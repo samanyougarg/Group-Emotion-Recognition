@@ -13,8 +13,8 @@ from app import bayesian_network
 from app.classify_image import classify_image
 
 def load_models():
-    global cnn_model, bayesian_model, labels_list
-    cnn_model = cnn.load_model()
+    global cnn_model, graph, bayesian_model, labels_list
+    cnn_model, graph = cnn.load_model()
     cnn_model._make_predict_function()
     bayesian_model, labels_list = bayesian_network.load_model()
 
@@ -47,6 +47,6 @@ def process_image():
             updir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'static/input'))
             image_path = os.path.join(updir, filename)
 
-        emotion_dict, emotion_cnn_dict, cnn_dict = classify_image(image_path, cnn_model, bayesian_model, labels_list)
+        emotion_dict, emotion_cnn_dict, cnn_dict = classify_image(image_path, cnn_model, graph, bayesian_model, labels_list)
         
         return jsonify(emotion_dict, cnn_dict, emotion_cnn_dict)

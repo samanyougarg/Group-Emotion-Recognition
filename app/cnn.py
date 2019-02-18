@@ -4,6 +4,7 @@ import numpy as np
 import glob, os
 import cv2
 from flask import current_app
+import tensorflow as tf 
 
 classes = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
 
@@ -18,11 +19,13 @@ def load_model():
     # load weights into new model
     model.load_weights(os.getcwd() + "/app/model.h5")
 
+    graph = tf.get_default_graph()
+
     print("Loaded CNN model from disk")
 
-    return model
+    return model, graph
 
-def predict_face(model, image_path):
+def predict_face(model, graph, image_path):
     # Load the image and resize to 64X64
     current_app.logger.error("image")
     image = load_img(image_path, target_size=(64, 64))
@@ -38,7 +41,8 @@ def predict_face(model, image_path):
 
     # Get the predicted probabilities for each class
     current_app.logger.error("Predict")
-    pred = model.predict(image)
+    with graph.as_default():
+        pred = model.predict(image)
     current_app.logger.error(pred)
     # Get the class with the highest probability
     pred_digits=np.argmax(pred,axis=1)
@@ -52,7 +56,7 @@ def predict_face(model, image_path):
     # return the predicted probabilities for the face
     return pred
 
-def predict_image(model, input_path, image_path):
+def predict_image(model, graph, input_path, image_path):
     current_app.logger.error("RadhaKrishna")
     # extract image name from the image path
     image_name = (image_path.split("/")[-1])[:-4]
@@ -67,7 +71,7 @@ def predict_image(model, input_path, image_path):
         if (image_name + "_face" in face_image_name):
             current_app.logger.error("RadhaKrishnaHanuman")
             # get the predicted probabilities for current face image
-            predicted_probabilities = predict_face(model, face_image)
+            predicted_probabilities = predict_face(model, graph, face_image)
             # append to the probabilities list
             current_app.logger.error("Success!")
             predictions_list.append(predicted_probabilities)
