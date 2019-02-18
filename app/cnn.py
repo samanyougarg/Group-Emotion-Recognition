@@ -41,6 +41,8 @@ def predict_face(model, graph, image_path):
 
     # Get the predicted probabilities for each class
     current_app.logger.error("Predict")
+
+    graph = tf.get_default_graph()
     with graph.as_default():
         pred = model.predict(image)
     current_app.logger.error(pred)
