@@ -19,6 +19,8 @@ def load_model():
     # load weights into new model
     model.load_weights(os.getcwd() + "/app/model.h5")
 
+    print('testing model:', model.predict(np.zeros((1, 64, 64, 3))))
+
     print("Loaded CNN model from disk")
 
     return model

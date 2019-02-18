@@ -13,8 +13,6 @@ from app import bayesian_network
 from app.classify_image import classify_image
 from keras import backend as K 
 
-K.clear_session()
-
 def load_models():
     global cnn_model, graph, bayesian_model, labels_list
     cnn_model = cnn.load_model()
