@@ -4,7 +4,7 @@ import numpy as np
 import glob, os
 import cv2
 from flask import current_app
-import tensorflow as tf 
+from keras import backend as K 
 
 classes = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
 
@@ -40,6 +40,7 @@ def predict_face(model, graph, image_path):
     # Get the predicted probabilities for each class
     current_app.logger.error("Predict")
     current_app.logger.error(graph)
+    
     with graph.as_default():
         current_app.logger.error("RadhaKrishna")
         pred = model.predict(image)

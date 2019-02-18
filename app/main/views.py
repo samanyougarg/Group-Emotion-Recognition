@@ -11,14 +11,15 @@ import os
 from app import cnn
 from app import bayesian_network
 from app.classify_image import classify_image
-import tensorflow as tf 
+from keras import backend as K 
 
+K.clear_session()
 
 def load_models():
     global cnn_model, graph, bayesian_model, labels_list
     cnn_model = cnn.load_model()
     cnn_model._make_predict_function()
-    graph = tf.get_default_graph()
+    graph = K.get_session().graph
     bayesian_model, labels_list = bayesian_network.load_model()
 
 @main.route('/', methods=['GET', 'POST'])
