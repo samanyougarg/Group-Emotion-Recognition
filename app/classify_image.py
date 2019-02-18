@@ -15,6 +15,8 @@ def classify_image(image_path, cnn_model, bayesian_model, labels_list):
 
     cnn_label, cnn_dict = cnn.predict_image(cnn_model, os.getcwd() + "/app/static/input/Aligned/", image_path)
 
+    current_app.logger.info("CNN Label " + cnn_label)
+
     bayesian_label, emotion_dict, emotion_cnn_dict = bayesian_network.inference(bayesian_model, labels_list, labels, cnn_label)
 
     prediction = bayesian_label

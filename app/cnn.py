@@ -47,6 +47,7 @@ def predict_face(model, image_path):
     return pred
 
 def predict_image(model, input_path, image_path):
+    current_app.logger.error("RadhaKrishna")
     # extract image name from the image path
     image_name = (image_path.split("/")[-1])[:-4]
 
