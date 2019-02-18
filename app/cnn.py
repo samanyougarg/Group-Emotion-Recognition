@@ -19,11 +19,9 @@ def load_model():
     # load weights into new model
     model.load_weights(os.getcwd() + "/app/model.h5")
 
-    graph = tf.get_default_graph()
-
     print("Loaded CNN model from disk")
 
-    return model, graph
+    return model
 
 def predict_face(model, graph, image_path):
     # Load the image and resize to 64X64
@@ -41,9 +39,9 @@ def predict_face(model, graph, image_path):
 
     # Get the predicted probabilities for each class
     current_app.logger.error("Predict")
-
-    graph = tf.get_default_graph()
+    current_app.logger.error(graph)
     with graph.as_default():
+        current_app.logger.error("RadhaKrishna")
         pred = model.predict(image)
     current_app.logger.error(pred)
     # Get the class with the highest probability
