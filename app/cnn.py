@@ -24,16 +24,22 @@ def load_model():
 
 def predict_face(model, image_path):
     # Load the image and resize to 64X64
+    current_app.logger.error("image")
     image = load_img(image_path, target_size=(64, 64))
     # Covert to a numpy array
+    current_app.logger.error("Numpy")
     image = img_to_array(image)
     # Normalize it
+    current_app.logger.error("Normalize")
     image = image / 255
     # Expand dimensions
+    current_app.logger.error("Expand")
     image = np.expand_dims(image, axis=0)
 
     # Get the predicted probabilities for each class
+    current_app.logger.error("Predict")
     pred = model.predict(image)
+    current_app.logger.error("Argmax")
     # Get the class with the highest probability
     pred_digits=np.argmax(pred,axis=1)
 
@@ -63,7 +69,7 @@ def predict_image(model, input_path, image_path):
             # get the predicted probabilities for current face image
             predicted_probabilities = predict_face(model, face_image)
             # append to the probabilities list
-            current_app.logger.error("RadhaKrishna")
+            current_app.logger.error("Success!")
             predictions_list.append(predicted_probabilities)
         
     # mean of the predicted probabilities for each face in the image
