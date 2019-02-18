@@ -49,6 +49,7 @@ def process_image():
             updir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'static/input'))
             image_path = os.path.join(updir, filename)
 
+        current_app.logger.info('testing model:', model.predict(np.zeros((1, 64, 64, 3))))
         emotion_dict, emotion_cnn_dict, cnn_dict = classify_image(image_path, cnn_model, graph, bayesian_model, labels_list)
         
         return jsonify(emotion_dict, cnn_dict, emotion_cnn_dict)
