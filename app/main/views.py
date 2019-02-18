@@ -12,6 +12,7 @@ from app import cnn
 from app import bayesian_network
 from app.classify_image import classify_image
 from keras import backend as K 
+import numpy as np
 
 def load_models():
     global cnn_model, graph, bayesian_model, labels_list
