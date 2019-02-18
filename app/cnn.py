@@ -59,9 +59,11 @@ def predict_image(model, input_path, image_path):
         face_image_name = (face_image.split("/")[-1])[:-4]
         # if face is from the current image
         if (image_name + "_face" in face_image_name):
+            current_app.logger.error("RadhaKrishnaHanuman")
             # get the predicted probabilities for current face image
             predicted_probabilities = predict_face(model, face_image)
             # append to the probabilities list
+            current_app.logger.error("RadhaKrishna")
             predictions_list.append(predicted_probabilities)
         
     # mean of the predicted probabilities for each face in the image
