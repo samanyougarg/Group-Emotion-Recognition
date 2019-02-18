@@ -5,10 +5,14 @@ import numpy as np
 from . import image_preprocessing
 from . import cnn
 from . import bayesian_network
+from flask import current_app
 
 def classify_image(image_path, cnn_model, bayesian_model, labels_list):
     # labels = image_preprocessing.detect_labels(image_path)
     labels = ["people", "tribe", "leisure", "fun", "temple", "vacation", "tradition", "happiness", "tourism", "travel"]
+
+    current_app.logger.error("Input Path: " + os.getcwd() + "/app/static/input/")
+    current_app.logger.error("Image Path: " + image_path)
 
     image_preprocessing.preprocess(os.getcwd() + "/app/static/input/", image_path)
 

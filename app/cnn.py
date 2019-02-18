@@ -3,6 +3,7 @@ from keras.preprocessing.image import img_to_array, load_img
 import numpy as np
 import glob, os
 import cv2
+from flask import current_app
 
 classes = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
 
@@ -53,6 +54,7 @@ def predict_image(model, input_path, image_path):
     predictions_list = []
 
     for face_image in glob.glob(input_path + "*.jpg"):
+        current_app.logger.error("CNN Image glob Path: " + face_image)
         face_image_name = (face_image.split("/")[-1])[:-4]
         # if face is from the current image
         if (image_name + "_face" in face_image_name):
