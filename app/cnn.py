@@ -39,7 +39,7 @@ def predict_face(model, image_path):
     # Get the predicted probabilities for each class
     current_app.logger.error("Predict")
     pred = model.predict(image)
-    current_app.logger.error("Argmax")
+    current_app.logger.error(pred)
     # Get the class with the highest probability
     pred_digits=np.argmax(pred,axis=1)
 
