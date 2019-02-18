@@ -11,9 +11,6 @@ def classify_image(image_path, cnn_model, bayesian_model, labels_list):
     # labels = image_preprocessing.detect_labels(image_path)
     labels = ["people", "tribe", "leisure", "fun", "temple", "vacation", "tradition", "happiness", "tourism", "travel"]
 
-    current_app.logger.error("Input Path: " + os.getcwd() + "/app/static/input/")
-    current_app.logger.error("Image Path: " + image_path)
-
     image_preprocessing.preprocess(os.getcwd() + "/app/static/input/", image_path)
 
     cnn_label, cnn_dict = cnn.predict_image(cnn_model, os.getcwd() + "/app/static/input/Aligned/", image_path)
@@ -22,7 +19,7 @@ def classify_image(image_path, cnn_model, bayesian_model, labels_list):
 
     prediction = bayesian_label
 
-    print("CNN Label: " + cnn_label)
-    print("Bayesian Label: " + bayesian_label)
+    current_app.logger.info("CNN Label: " + cnn_label)
+    current_app.logger.info("Bayesian Label: " + bayesian_label)
     
     return emotion_dict, emotion_cnn_dict, cnn_dict
