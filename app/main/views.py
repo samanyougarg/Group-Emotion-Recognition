@@ -38,7 +38,6 @@ def process_image():
 
         if 'image' in request.files:
             image = request.files['image']
-            print(type(image))
             if image and allowed_file(image.filename):
                 filename = secure_filename(image.filename)
                 current_app.logger.info('FileName: ' + filename)
