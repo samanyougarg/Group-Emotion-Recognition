@@ -11,6 +11,9 @@ import os
 from app import cnn
 from app import bayesian_network
 from app.classify_image import classify_image
+from PIL import Image
+
+size = 1000, 1000
 
 def load_models():
     global cnn_model, bayesian_model, labels_list
@@ -35,6 +38,7 @@ def process_image():
 
         if 'image' in request.files:
             image = request.files['image']
+            print(type(image))
             if image and allowed_file(image.filename):
                 filename = secure_filename(image.filename)
                 current_app.logger.info('FileName: ' + filename)
@@ -47,6 +51,9 @@ def process_image():
             updir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'static/input'))
             image_path = os.path.join(updir, filename)
 
+        im = Image.open(image_path)
+        im.thumbnail(size, Image.ANTIALIAS)
+        im.save(image_path, "JPEG")
         emotion_dict, emotion_cnn_dict, cnn_dict = classify_image(image_path, cnn_model, bayesian_model, labels_list)
         
         return jsonify(emotion_dict, cnn_dict, emotion_cnn_dict)
