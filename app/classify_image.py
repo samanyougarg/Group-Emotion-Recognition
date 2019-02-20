@@ -7,8 +7,8 @@ from . import cnn
 from . import bayesian_network
 
 def classify_image(image_path, cnn_model, bayesian_model, labels_list):
-    # labels = image_preprocessing.detect_labels(image_path)
-    labels = ["people", "tribe", "leisure", "fun", "temple", "vacation", "tradition", "happiness", "tourism", "travel"]
+    labels = image_preprocessing.detect_labels(image_path)
+    # labels = ["people", "tribe", "leisure", "fun", "temple", "vacation", "tradition", "happiness", "tourism", "travel"]
 
     print("RadhaKrishna")
     image_preprocessing.preprocess(os.getcwd() + "/app/static/input/", image_path)
