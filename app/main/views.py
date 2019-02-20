@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, jsonify, current_app, request
+from flask import render_template, jsonify, current_app, request, send_from_directory
 from app.models.building import BuildingModel
 from . import main
 from app import db, csrf
@@ -56,3 +56,11 @@ def process_image():
         emotion_dict, emotion_cnn_dict, cnn_dict = classify_image(image_path, cnn_model, bayesian_model, labels_list)
         
         return jsonify(emotion_dict, cnn_dict, emotion_cnn_dict)
+
+
+@main.route('/robots.txt')
+@main.route('/sitemap.xml')
+@main.route('/manifest.json')
+@main.route('/radhakrishna.js')
+def static_from_root():
+    return send_from_directory(current_app.static_folder, request.path[1:])
