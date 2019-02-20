@@ -9,5 +9,6 @@ vendor_js = Bundle(
     'vendor/popper.min.js',
     'vendor/bootstrap-material-design.min.js',
     'vendor/material-kit.min.js',
+    'vendor/loadingoverlay.min.js',
     filters='jsmin',
     output='scripts/vendor.js')
