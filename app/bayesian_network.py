@@ -198,7 +198,6 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
     if cnn_prediction is not None:
         # get prediction from CNN
         label_evidences['CNN'] = reverse_classes[cnn_prediction]
-        emotion_infer = VariableElimination(model)
 
         # Compute the probability of the emotions given the detected labels list
         q = emotion_infer.query(['Emotion'], evidence=label_evidences)
