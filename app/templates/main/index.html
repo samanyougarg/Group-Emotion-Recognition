@@ -118,13 +118,6 @@
           </div>
         </div>
 
-        <div class="row" style="margin-top: 1rem;">
-          <div class="col-md-12">
-            <button class="btn btn-success btn-round btn-block" id="submit_btn" type="submit"><i class="material-icons">check_circle</i> Process Image </button>
-          </div>
-          </form>
-        </div>
-
       </div>
     </div>
     
@@ -141,6 +134,13 @@
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 1rem;" >
+          <div class="col-md-12">
+            <button class="btn btn-success btn-round btn-process btn-block" id="submit_btn" type="submit"><i class="material-icons">check_circle</i> Process Image </button>
+          </div>
+          </form>
         </div>
 
         <br>
@@ -524,13 +524,19 @@
     #predictions {
       display: none;
     }
+
+    .btn.btn-process {
+      padding: 1rem 2.25rem;
+      font-size: .875rem;
+      line-height: 1.333333;
+    }
     
   </style>
 
   <script type='text/javascript'>
     var image_set = "/static/images/image_happy_1.jpg";
     $('#image').on('input', function() {
-      if(this.files[0].size > 2097152){
+      if(this.files[0].size > 5242880){
         alert("File is too big!");
         this.value = "";
       } else {
@@ -540,6 +546,9 @@
           output.src = reader.result;
         }
         reader.readAsDataURL(event.target.files[0]);
+        $('html, body').animate({
+          scrollTop: $("#emotions").offset().top
+        }, 2000);
       }
     });
 
@@ -547,6 +556,9 @@
       var output = document.getElementById('input_image');
       output.src = image_url;
       image_set = image_url;
+      $('html, body').animate({
+        scrollTop: $("#emotions").offset().top
+      }, 1000);
     }
 
     function updateProgress(emotion, percentage) {
