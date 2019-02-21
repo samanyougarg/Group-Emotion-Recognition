@@ -153,7 +153,7 @@
 
         <br>
 
-        <div class="row">
+        <div class="row" id="emojis">
             <div class="col-md-3 col-4">
               <h4 class="text-success"><b>Positive</b></h4>
               <div class="card">
@@ -611,8 +611,8 @@
                 }
 
                 $('html, body').animate({
-                  scrollTop: $("#emotions").offset().top
-                }, 2000);
+                  scrollTop: $("#emojis").offset().top
+                }, 1000);
                 
             }).fail(function(data) {
                 alert('error!');
