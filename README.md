@@ -1,5 +1,4 @@
 # Group-Emotion-Recognition
-Jai Shri Radha Krishna 🕉️🕉️
 
 This project aims to classify a group’s perceived emotion as Positive, Neutral or Negative. The dataset being used is the [Group Affect Database 3.0](https://sites.google.com/view/emotiw2018) which contains "in the wild" photos of groups of people in various social environments.
 
@@ -31,7 +30,7 @@ My approach is based on the research paper "[Emotion Recognition in the Wild usi
 
   
 
-![Approach](https://emotionrecognition.samanyougarg.com/static/images/method.jpg)
+![Approach](https://emotion-recognition.samanyougarg.com/static/images/method.jpg)
 
   
 
@@ -58,3 +57,7 @@ My approach is based on the research paper "[Emotion Recognition in the Wild usi
     
 
 The value obtained by the bottom-up module is then used as input to the Bayesian Network in the top layer.
+
+---
+
+राधे राधे 🕉️🕉️
