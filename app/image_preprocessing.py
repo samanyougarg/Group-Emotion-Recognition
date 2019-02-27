@@ -30,7 +30,7 @@ def detect_labels(path):
     response = client.label_detection(image=image)
     labels = response.label_annotations
     
-    labels_list = [label.description for label in labels]
+    labels_list = [(label.description).lower() for label in labels]
     
     return labels_list
 

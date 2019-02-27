@@ -7,15 +7,15 @@ from . import cnn
 from . import bayesian_network
 
 image_label_dict = {
-    "image_happy_1.jpg": ['People', 'Friendship', 'Fun', 'Event', 'Drinking', 'Happy', 'Picnic', 'Recreation', 'Smile', 'Leisure'],
-    "image_happy_2.jpg": ['Hair', 'Facial expression', 'Fun', 'Friendship', 'Hairstyle', 'Smile', 'Yellow', 'Event', 'Human', 'Laugh'],
-    "image_happy_neutral_1.jpg": ['People', 'Family taking photos together', 'Social group', 'Child', 'Father', 'Event','Family', 'Fun', 'Smile', 'Photography'],
-    "image_happy_neutral_2.jpg": ['People', 'Social group', 'Fun', 'Team', 'Event', 'Crew', 'Tourism', 'Uniform', 'Leisure', 'Smile'],
-    "image_happy_neutral_3.jpg": ['People', 'Tribe', 'Fun', 'Human', 'Smile', 'Community', 'Child', 'Happy', 'Adaptation'],
-    "image_happy_neutral_4.jpg": ['People', 'Child', 'Smile', 'Community', 'Youth', 'Friendship', 'Adaptation', 'Fun', 'Happy', 'Event'],
-    "image_neutral_sad.jpg": ['Hair', 'Face', 'Chin', 'Hairstyle', 'Cool', 'Forehead', 'Black hair', 'Fun', 'Neck', 'Smile'],
-    "image_neutral.jpg": ['Face', 'People', 'Facial expression', 'Child', 'Smile', 'Skin', 'Fun', 'Child model','Human', 'Happy'],
-    "image_sad_1.jpg": ['People', 'Community', 'Tribe', 'Adaptation', 'Tradition', 'Event', 'Child', 'Smile', 'Tourism', 'Turban']
+    "image_happy_1.jpg": ['people', 'friendship', 'fun', 'event', 'drinking', 'happy', 'picnic', 'recreation', 'smile', 'leisure'],
+    "image_happy_2.jpg": ['hair', 'facial expression', 'fun', 'friendship', 'hairstyle', 'smile', 'yellow', 'event', 'human', 'laugh'],
+    "image_happy_neutral_1.jpg": ['people', 'family taking photos together', 'social group', 'child', 'father', 'event','family', 'fun', 'smile', 'photography'],
+    "image_happy_neutral_2.jpg": ['people', 'social group', 'fun', 'team', 'event', 'crew', 'tourism', 'uniform', 'leisure', 'smile'],
+    "image_happy_neutral_3.jpg": ['people', 'tribe', 'fun', 'human', 'smile', 'community', 'child', 'happy', 'adaptation'],
+    "image_happy_neutral_4.jpg": ['people', 'child', 'smile', 'community', 'youth', 'friendship', 'adaptation', 'fun', 'happy', 'event'],
+    "image_neutral_sad.jpg": ['hair', 'face', 'chin', 'hairstyle', 'cool', 'forehead', 'black hair', 'fun', 'neck', 'smile'],
+    "image_neutral.jpg": ['face', 'people', 'facial expression', 'child', 'smile', 'skin', 'fun', 'child model','human', 'happy'],
+    "image_sad_1.jpg": ['people', 'community', 'tribe', 'adaptation', 'tradition', 'event', 'child', 'smile', 'tourism', 'turban']
 }
 
 # function to classify an image
