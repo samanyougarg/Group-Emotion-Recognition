@@ -635,11 +635,11 @@
                 $("#face_predictions").html("");
                 jQuery.each(data[3], function (key, val) {
                   if (i % 3 == 1) {
-                    face_predictions += `<div class="row"><div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
+                    face_predictions += `<div class="row"><div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
                   } else if (i % 3 == 0) {
-                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div></div>`;
+                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div></div>`;
                   } else {
-                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
+                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
                   }
                   i++;
                 });
