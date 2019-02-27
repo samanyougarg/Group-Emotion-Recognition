@@ -165,7 +165,7 @@
                       <b></b>
                     </div>
                   </div>
-                  <h4 id="progresspositive" class="text-success"><b></b></h4>
+                  <h5 id="progresspositive" class="text-success"><b></b></h5>
 
                 </div>
               </div>
@@ -181,7 +181,7 @@
                       <b></b>
                     </div>
                   </div>
-                  <h4 id="progressneutral" class="text-warning"><b></b></h4>
+                  <h5 id="progressneutral" class="text-warning"><b></b></h5>
 
                 </div>
               </div>
@@ -197,7 +197,7 @@
                       <b></b>
                     </div>
                   </div>
-                  <h4 id="progressnegative" class="text-danger"><b></b></h4>
+                  <h5 id="progressnegative" class="text-danger"><b></b></h5>
 
                 </div>
               </div>
@@ -206,9 +206,20 @@
         </div>
     </div>
 
+    <div class="section section-basic section" id="individual-faces">
+      <div class="container text-center">
+        <h2>CNN PREDICTIONS FOR INDIVIDUAL DETECTED FACES</h2>
+
+        <div id="face_predictions">
+
+        </div>
+
+      </div>
+    </div>
+
     <div class="section section-basic section-grey" id="predictions">
       <div class="container text-center">
-        <h2>PREDICTIONS</h2>
+        <h2>PREDICTIONS FOR THE GROUP</h2>
         <div class="row">
 
           <div class="col-md-5">
@@ -395,7 +406,7 @@
       height: 80vh;
     }
 
-    h1, h2, h3, h4, p, li {
+    h1, h2, h3, h4, h5, p, li {
       font-weight:400;
     }
 
@@ -525,6 +536,10 @@
       display: none;
     }
 
+    #individual-faces {
+      display: none;
+    }
+
     .btn.btn-process {
       padding: 1rem 2.25rem;
       font-size: .875rem;
@@ -559,6 +574,16 @@
       $('html, body').animate({
         scrollTop: $("#emotions").offset().top
       }, 1000);
+    }
+
+    function countProperties(obj) {
+      var prop;
+      var propCount = 0;
+
+      for (prop in obj) {
+        propCount++;
+      }
+      return propCount;
     }
 
     function updateProgress(emotion, percentage) {
@@ -604,7 +629,27 @@
                   var markup = "<tr class='bg-" + key.toLowerCase() + "'><td><b>" + key + "</b></td><td><b>" + val + "</b></td></tr>";
                   $("#bayesian_cnn_table tbody").append(markup);
                 });
+
+                var i = 1;
+                var face_predictions = "";
+                $("#face_predictions").html("");
+                jQuery.each(data[3], function (key, val) {
+                  if (i % 3 == 1) {
+                    face_predictions += `<div class="row"><div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
+                  } else if (i % 3 == 0) {
+                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div></div>`;
+                  } else {
+                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
+                  }
+                  i++;
+                });
+                $('#face_predictions').append(face_predictions);
                 
+                if ($("#individual-faces").is(":visible")) {
+                } else {
+                  $('#individual-faces').show();
+                }
+
                 if ($("#predictions").is(":visible")) {
                 } else {
                   $('#predictions').show();

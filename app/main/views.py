@@ -71,10 +71,10 @@ def process_image():
         im.save(image_path, "JPEG")
 
         # get the bayesian, cnn and bayesian + cnn predictions
-        emotion_dict, emotion_cnn_dict, cnn_dict = classify_image(image_path, cnn_model, bayesian_model, labels_list)
+        emotion_dict, emotion_cnn_dict, cnn_dict, cnn_individual_dict = classify_image(image_path, cnn_model, bayesian_model, labels_list)
         
         # return bayesian, cnn and bayesian + cnn predictions
-        return jsonify(emotion_dict, cnn_dict, emotion_cnn_dict)
+        return jsonify(emotion_dict, cnn_dict, emotion_cnn_dict, cnn_individual_dict)
 
 
 @main.route('/robots.txt')
