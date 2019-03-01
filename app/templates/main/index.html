@@ -545,6 +545,10 @@
       font-size: .875rem;
       line-height: 1.333333;
     }
+
+    .table td {
+      text-align: center;   
+    }
     
   </style>
 
@@ -617,11 +621,15 @@
                   $("#bayesian_table tbody").append(markup);
                 });
 
-                $("#cnn_table > tbody").html("");
-                jQuery.each(data[1], function (key, val) {
-                  var markup = "<tr class='bg-" + key.toLowerCase() + "'><td><b>" + key + "</b></td><td><b>" + val.toFixed(4) + "</b></td></tr>";
-                  $("#cnn_table tbody").append(markup);
-                });
+                if (data[1] != null) {
+                  $("#cnn_table > tbody").html("");
+                  jQuery.each(data[1], function (key, val) {
+                    var markup = "<tr class='bg-" + key.toLowerCase() + "'><td><b>" + key + "</b></td><td><b>" + val.toFixed(4) + "</b></td></tr>";
+                    $("#cnn_table tbody").append(markup);
+                  });
+                } else {
+                  $("#cnn_table tbody").append('<h4 class="text-white"><b>No faces detected.</b></h4>');
+                }
 
                 $("#bayesian_cnn_table > tbody").html("");
                 jQuery.each(data[2], function (key, val) {
@@ -632,17 +640,21 @@
 
                 var i = 1;
                 var face_predictions = "";
-                $("#face_predictions").html("");
-                jQuery.each(data[3], function (key, val) {
-                  if (i % 3 == 1) {
-                    face_predictions += `<div class="row"><div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
-                  } else if (i % 3 == 0) {
-                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div></div>`;
-                  } else {
-                    face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
-                  }
-                  i++;
-                });
+                if (data[3] != null) {
+                  $("#face_predictions").html("");
+                  jQuery.each(data[3], function (key, val) {
+                    if (i % 3 == 1) {
+                      face_predictions += `<div class="row"><div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
+                    } else if (i % 3 == 0) {
+                      face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div></div>`;
+                    } else {
+                      face_predictions += `<div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;
+                    }
+                    i++;
+                  });
+                } else {
+                  face_predictions += `<div class="row justify-content-center"> <div class="col-md-3"> <div class="card text-white bg-danger"> <div class="card-body"> <img src="/static/images/favicon.png" class="rounded img-fluid" style="margin-bottom: 1rem;"> <h5 class="text-white"><b>Sorry! No faces detected.</b></h5> </div></div></div></div>`;
+                }
                 $('#face_predictions').append(face_predictions);
                 
                 if ($("#individual-faces").is(":visible")) {

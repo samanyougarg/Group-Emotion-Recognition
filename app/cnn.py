@@ -54,6 +54,7 @@ def predict_image(model, input_path, image_path):
     # list to store predictions for all faces in the image
     predictions_list = []
     predictions_dict = {}
+    faces_detected = True
 
     for face_image in glob.glob(input_path + "*.jpg"):
         face_image_name = (face_image.split("/")[-1])[:-4]
@@ -65,14 +66,19 @@ def predict_image(model, input_path, image_path):
             predictions_list.append(predicted_probabilities)
             # store the face and the corresponding probabilities in the dict
             predictions_dict[face_image.split("/")[-1]] = classes_face[np.argmax(predicted_probabilities)]
-        
-    # mean of the predicted probabilities for each face in the image
-    mean_probabilities_for_image = np.mean(predictions_list, axis=0)
-    print(mean_probabilities_for_image)
-    emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
-    emotion_dict['Positive'] = float(round(mean_probabilities_for_image[0][2], 4))
-    emotion_dict['Negative'] = float(round(mean_probabilities_for_image[0][0], 4))
-    emotion_dict['Neutral'] = float(round(mean_probabilities_for_image[0][1], 4))
+    
+    if predictions_list == []:
+        faces_detected = False
 
-    # predicted class for the image i.e. class with the highest probabilities
-    return classes[np.argmax(mean_probabilities_for_image)], emotion_dict, predictions_dict
+    if faces_detected:
+        # mean of the predicted probabilities for each face in the image
+        mean_probabilities_for_image = np.mean(predictions_list, axis=0)
+        print(mean_probabilities_for_image)
+        emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
+        emotion_dict['Positive'] = float(round(mean_probabilities_for_image[0][2], 4))
+        emotion_dict['Negative'] = float(round(mean_probabilities_for_image[0][0], 4))
+        emotion_dict['Neutral'] = float(round(mean_probabilities_for_image[0][1], 4))
+
+        # predicted class for the image i.e. class with the highest probabilities
+        return classes[np.argmax(mean_probabilities_for_image)], emotion_dict, predictions_dict, faces_detected
+    return None, None, None, faces_detected

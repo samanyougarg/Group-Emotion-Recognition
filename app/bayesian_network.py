@@ -188,12 +188,17 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
     q = emotion_infer.query(['Emotion'], evidence=label_evidences)
     print(q['Emotion'])
 
+    bayes_prediction, bayes_cnn_prediction = None, None
     emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
-    emotion_cnn_dict = deepcopy(emotion_dict)
     emotion_preds = q['Emotion'].values
+    
     emotion_dict['Positive'] = round(emotion_preds[0], 4)
     emotion_dict['Negative'] = round(emotion_preds[1], 4)
     emotion_dict['Neutral'] = round(emotion_preds[2], 4)
+
+    emotion_cnn_dict = deepcopy(emotion_dict)
+    
+    bayes_prediction = classes[np.argmax(emotion_preds)]
 
     if cnn_prediction is not None:
         # get prediction from CNN
@@ -202,12 +207,11 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
         # Compute the probability of the emotions given the detected labels list
         q = emotion_infer.query(['Emotion'], evidence=label_evidences)
         print(q['Emotion'])
-
         emotion_preds = q['Emotion'].values
         emotion_cnn_dict['Positive'] = round(emotion_preds[0], 4)
         emotion_cnn_dict['Negative'] = round(emotion_preds[1], 4)
         emotion_cnn_dict['Neutral'] = round(emotion_preds[2], 4)
-
-        return classes[np.argmax(emotion_preds)], emotion_dict, emotion_cnn_dict
-
-    return classes[np.argmax(emotion_preds)], emotion_dict, None
+        bayes_cnn_prediction = classes[np.argmax(emotion_preds)]
+    else:
+        bayes_cnn_prediction = bayes_prediction
+    return bayes_prediction, bayes_cnn_prediction, emotion_dict, emotion_cnn_dict
