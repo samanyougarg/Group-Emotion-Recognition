@@ -1,7 +1,7 @@
 from keras.models import model_from_json
 from keras.preprocessing.image import img_to_array, load_img
 import numpy as np
-import glob
+import glob, os
 import cv2
 
 classes = {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
@@ -51,6 +51,7 @@ def predict_image(model, input_path, image_path):
 
     # list to store predictions for all faces in the image
     predictions_list = []
+    faces_detected = True
 
     for face_image in glob.glob(input_path + "*.jpg"):
         face_image_name = (face_image.split("/")[-1])[:-4]
@@ -60,9 +61,19 @@ def predict_image(model, input_path, image_path):
             predicted_probabilities = predict_face(model, face_image)
             # append to the probabilities list
             predictions_list.append(predicted_probabilities)
-        
-    # mean of the predicted probabilities for each face in the image
-    mean_probabilities_for_image = np.mean(predictions_list, axis=0)
 
-    # predicted class for the image i.e. class with the highest probabilities
-    return classes[np.argmax(mean_probabilities_for_image)]
+    if predictions_list == []:
+        faces_detected = False
+        
+    if faces_detected:
+        # mean of the predicted probabilities for each face in the image
+        mean_probabilities_for_image = np.mean(predictions_list, axis=0)
+        # print(mean_probabilities_for_image)
+        emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
+        emotion_dict['Positive'] = float(round(mean_probabilities_for_image[0][2], 4))
+        emotion_dict['Negative'] = float(round(mean_probabilities_for_image[0][0], 4))
+        emotion_dict['Neutral'] = float(round(mean_probabilities_for_image[0][1], 4))
+
+        # predicted class for the image i.e. class with the highest probabilities
+        return classes[np.argmax(mean_probabilities_for_image)], emotion_dict, faces_detected
+    return None, None, faces_detected

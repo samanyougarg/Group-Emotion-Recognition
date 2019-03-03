@@ -30,7 +30,7 @@ def detect_labels(path):
     response = client.label_detection(image=image)
     labels = response.label_annotations
     
-    labels_list = [label.description for label in labels]
+    labels_list = [(label.description).lower() for label in labels]
     
     return labels_list
 
@@ -230,7 +230,7 @@ def extract_faces(image_file, cropped_images_path):
     
     # apply face detection
     faces = detector(image, 1)
-    
+
     # loop over detected faces
     for face in faces:
         # crop the image
@@ -244,61 +244,62 @@ def extract_faces(image_file, cropped_images_path):
 
 
 # #### 3.3 Function to resize the cropped faces
-def resize_faces(cropped_images_path, scaled_images_path, size):
+def resize_faces(image_file, cropped_images_path, scaled_images_path, size):
     count = 1
     # for each image in the cropped images path
     for file in glob.glob(cropped_images_path+"*.jpg"):
-        # read the image
-        image = cv2.imread(file)
-        # get the height and width of the image
-        height, width = image.shape[:2]
-        
-        # get the height and weight ratios
-        height_ratio, width_ratio = float(size/height), float(size/width)
-        
-        # resize the image making sure that the original ratio is maintained
-        resized = cv2.resize(image, None, fx=width_ratio, fy=height_ratio, interpolation=cv2.INTER_AREA)
-        
-        # extract image name from full file name
-        image_name = (file.split("/")[-1])
-        # save the scaled image
-        cv2.imwrite(scaled_images_path + image_name, resized)
+        # only scale the faces of the current image
+        if((image_file.split("/")[-1])[:-4] in file):
+            # read the image
+            image = cv2.imread(file)
+            # get the height and width of the image
+            height, width = image.shape[:2]
+            
+            # get the height and weight ratios
+            height_ratio, width_ratio = float(size/height), float(size/width)
+            
+            # resize the image making sure that the original ratio is maintained
+            resized = cv2.resize(image, None, fx=width_ratio, fy=height_ratio, interpolation=cv2.INTER_AREA)
+            
+            # extract image name from full file name
+            image_name = (file.split("/")[-1])
+            # save the scaled image
+            cv2.imwrite(scaled_images_path + image_name, resized)
 
 # #### 3.5 Function to align the faces
 align_dlib = AlignDlib('shape_predictor_68_face_landmarks.dat')
 
-def align_faces(scaled_images_path, aligned_images_path):
+def align_faces(image_file, scaled_images_path, aligned_images_path):
     count = 1
     # for each image in the scaled images directory
     for file in glob.glob(scaled_images_path+"*.jpg"):
+        # only align the faces of the current image
+        if((image_file.split("/")[-1])[:-4] in file):
         
-        # print(file)
-        
-        # read the image
-        image = cv2.imread(file)
-        
-        # initialize the bounding box
-        bb = align_dlib.getLargestFaceBoundingBox(image)
-        # align the face
-        aligned = align_dlib.align(64, image, bb, landmarkIndices=AlignDlib.INNER_EYES_AND_BOTTOM_LIP)
-        # if aligned
-        if aligned is not None:
+            # read the image
+            image = cv2.imread(file)
+            
+            # initialize the bounding box
+            bb = align_dlib.getLargestFaceBoundingBox(image)
+            # align the face
+            aligned = align_dlib.align(64, image, bb, landmarkIndices=AlignDlib.INNER_EYES_AND_BOTTOM_LIP)
+
             image_name = (file.split("/")[-1])
-            # save the image in the aligned images directory
-            cv2.imwrite(aligned_images_path + image_name, aligned)
-        else:
-            # save the image without alignment in the aligned images directory
-            cv2.imwrite(aligned_images_path + image_name, image)
+            
+            # if aligned
+            if aligned is not None:
+                # save the image in the aligned images directory
+                cv2.imwrite(aligned_images_path + image_name, aligned)
+            else:
+                # save the image without alignment in the aligned images directory
+                cv2.imwrite(aligned_images_path + image_name, image)
 
 
 # #### 3.6 Apply preprocessing to the dataset using the functions above
-def preprocess(image_file):
+def preprocess(data_dir, image_file):
     # detect and crop faces in the image
-    extract_faces(image_file, "test/Faces/")
+    extract_faces(data_dir + image_file, data_dir + "Faces/")
     # resize the cropped faces and save in "Scaled" directory
-    resize_faces("test/Faces/", "test/Scaled/", 64)
+    resize_faces(data_dir + image_file, data_dir + "Faces/", data_dir + "Scaled/", 64)
     # align the scaled faces and save in "Aligned" directory
-    align_faces("test/Scaled/", "test/Aligned/")
-
-
-
+    align_faces(data_dir + image_file, data_dir + "Scaled/", data_dir + "Aligned/")
