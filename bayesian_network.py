@@ -186,7 +186,7 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
 
     # Compute the probability of the emotions given the detected labels list
     q = emotion_infer.query(['Emotion'], evidence=label_evidences)
-    # print(q['Emotion'])
+    print(q['Emotion'])
 
     bayes_prediction, bayes_cnn_prediction = None, None
     emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
