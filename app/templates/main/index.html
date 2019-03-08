@@ -601,6 +601,7 @@
             event.preventDefault();
             var form_data = new FormData($('#upload_image')[0]);
             form_data.append('image_set', image_set);
+            $('#upload_image').trigger("reset");
             $.LoadingOverlay("show", {
                 image       : "",
                 fontawesome : "fa fa-cog fa-spin"
@@ -621,8 +622,8 @@
                   $("#bayesian_table tbody").append(markup);
                 });
 
+                $("#cnn_table > tbody").html("");
                 if (data[1] != null) {
-                  $("#cnn_table > tbody").html("");
                   jQuery.each(data[1], function (key, val) {
                     var markup = "<tr class='bg-" + key.toLowerCase() + "'><td><b>" + key + "</b></td><td><b>" + val.toFixed(4) + "</b></td></tr>";
                     $("#cnn_table tbody").append(markup);
@@ -640,8 +641,8 @@
 
                 var i = 1;
                 var face_predictions = "";
+                $("#face_predictions").html("");
                 if (data[3] != null) {
-                  $("#face_predictions").html("");
                   jQuery.each(data[3], function (key, val) {
                     if (i % 3 == 1) {
                       face_predictions += `<div class="row"><div class="col-md-4 col-4"><div class="card"><div class="card-body"><img src="/static/input/Scaled/` + key + `" class="rounded img-fluid" style="margin-bottom: 1rem;"><br>` + val + `</div></div></div>`;

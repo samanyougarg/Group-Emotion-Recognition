@@ -139,7 +139,7 @@ net = cv2.dnn.readNetFromCaffe(os.getcwd() + '/app/deploy.prototxt.txt',
 
 
 # #### 2.2 Function to detect and crop faces
-def extract_faces_cv(image_file, cropped_images_path):
+def extract_faces_cv_dnn(image_file, cropped_images_path):
     # load the input image and construct an input blob for the image
     # by resizing to a fixed 300x300 pixels and then normalizing it
     image = cv2.imread(image_file)
@@ -167,7 +167,7 @@ def extract_faces_cv(image_file, cropped_images_path):
 
         # filter out weak detections by ensuring the `confidence` is
         # greater than the minimum confidence
-        if confidence > 0.5:
+        if confidence > 0.2:
 
             # compute the (x, y)-coordinates of the bounding box for the
             # object
@@ -177,6 +177,39 @@ def extract_faces_cv(image_file, cropped_images_path):
             image_name = (image_file.split("/")[-1])[:-4]
             cropped_image.save(cropped_images_path + image_name + "_face_" + str(count) + ".jpg")
             count+=1
+
+
+# Create the haar cascade
+faceCascade = cv2.CascadeClassifier(os.getcwd() + '/app/haarcascade_frontalface_default.xml')
+
+def extract_faces_cv(image_file, cropped_images_path):
+    # Read the image
+    image = cv2.imread(image_file)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Detect faces in the image
+    faces = faceCascade.detectMultiScale(
+        gray,
+        scaleFactor=1.1,
+        minNeighbors=5,
+        minSize=(30, 30)
+    )
+
+    count = 0
+    image = Image.open(image_file)
+    
+    if faces is None:
+        print("No face detected in the image.")
+        return
+
+    # loop over the faces
+    for (x, y, w, h) in faces:
+        # crop the face in the image
+        cropped_image = image.crop((x, y, x+w, y+h))
+        image_name = (image_file.split("/")[-1])[:-4]
+        cropped_image.save(cropped_images_path + image_name + "_face_" + str(count) + ".jpg")
+        count+=1
+    return count
 
 
 # #### 2.3 Function to resize the cropped faces
@@ -220,7 +253,7 @@ detector = dlib.get_frontal_face_detector()
 def extract_faces(image_file, cropped_images_path):
     # load input image
     image = cv2.imread(image_file)
-    count = 1
+    count = 0
     # get the image height and width
     image_height, image_width = image.shape[:2]
     
@@ -230,6 +263,10 @@ def extract_faces(image_file, cropped_images_path):
     
     # apply face detection
     faces = detector(image, 1)
+
+    if faces is None:
+        print("No face detected in the image.")
+        return
 
     # loop over detected faces
     for face in faces:
@@ -241,6 +278,7 @@ def extract_faces(image_file, cropped_images_path):
         # save the cropped image
         cv2.imwrite(cropped_images_path + image_name + "_face_" + str(count) + ".jpg", cropped_image)
         count+=1
+    return count
 
 
 # #### 3.3 Function to resize the cropped faces
@@ -298,7 +336,13 @@ def align_faces(image_file, scaled_images_path, aligned_images_path):
 # #### 3.6 Apply preprocessing to the dataset using the functions above
 def preprocess(data_dir, image_file):
     # detect and crop faces in the image
-    extract_faces(image_file, data_dir + "Faces/")
+    faces_count = extract_faces(image_file, data_dir + "Faces/")
+    if faces_count == 0:
+        print("OpenCV")
+        faces_count = extract_faces_cv(image_file, data_dir + "Faces/")
+    if faces_count == 0:
+        print("OpenCV DNN")
+        extract_faces_cv_dnn(image_file, data_dir + "Faces/")
     # resize the cropped faces and save in "Scaled" directory
     resize_faces(image_file, data_dir + "Faces/", data_dir + "Scaled/", 64)
     # align the scaled faces and save in "Aligned" directory
