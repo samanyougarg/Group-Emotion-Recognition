@@ -123,6 +123,15 @@ def load_model():
         p_label_1_given_emo_neutral = float(neutral_ndarray[i]/total_neutral_labels)
         # P(label=1|Emotion=Negative)
         p_label_1_given_emo_negative = float(negative_ndarray[i]/total_negative_labels)
+
+        if p_label_1_given_emo_positive == 0.0:
+            p_label_1_given_emo_positive = 0.0001
+        
+        if p_label_1_given_emo_neutral == 0.0:
+            p_label_1_given_emo_neutral = 0.0001
+            
+        if p_label_1_given_emo_negative == 0.0:
+            p_label_1_given_emo_negative = 0.0001
         
         # P(label=0|Emotion=Positive)
         p_label_0_given_emo_positive = 1.0 - p_label_1_given_emo_positive
@@ -193,10 +202,13 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
     emotion_cnn_dict = deepcopy(emotion_dict)
     emotion_preds = q['Emotion'].values
     
-    emotion_dict['Positive'] = round(emotion_preds[0], 4)
-    emotion_dict['Negative'] = round(emotion_preds[1], 4)
-    emotion_dict['Neutral'] = round(emotion_preds[2], 4)
-    bayes_prediction = classes[np.argmax(emotion_preds)]
+    if np.isnan(emotion_preds).all():
+        bayes_prediction = "None"
+    else:
+        emotion_dict['Positive'] = round(emotion_preds[0], 4)
+        emotion_dict['Negative'] = round(emotion_preds[1], 4)
+        emotion_dict['Neutral'] = round(emotion_preds[2], 4)
+        bayes_prediction = classes[np.argmax(emotion_preds)]
 
     if cnn_prediction is not None:
         # get prediction from CNN
@@ -206,10 +218,14 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
         q = emotion_infer.query(['Emotion'], evidence=label_evidences)
         # print(q['Emotion'])
         emotion_preds = q['Emotion'].values
-        emotion_cnn_dict['Positive'] = round(emotion_preds[0], 4)
-        emotion_cnn_dict['Negative'] = round(emotion_preds[1], 4)
-        emotion_cnn_dict['Neutral'] = round(emotion_preds[2], 4)
-        bayes_cnn_prediction = classes[np.argmax(emotion_preds)]
+
+        if np.isnan(emotion_preds).all():
+            bayes_cnn_prediction = "None"
+        else:
+            emotion_cnn_dict['Positive'] = round(emotion_preds[0], 4)
+            emotion_cnn_dict['Negative'] = round(emotion_preds[1], 4)
+            emotion_cnn_dict['Neutral'] = round(emotion_preds[2], 4)
+            bayes_cnn_prediction = classes[np.argmax(emotion_preds)]
     else:
         bayes_cnn_prediction = bayes_prediction
     return bayes_prediction, bayes_cnn_prediction, emotion_dict, emotion_cnn_dict
