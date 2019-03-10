@@ -1,3 +1,8 @@
+"""Module to classify an image as Positive, Negative or Neutral."""
+
+#!/usr/bin/env python
+# coding: utf-8
+
 import os
 import sys
 import glob
@@ -24,13 +29,14 @@ def classify_image(image_path, cnn_model, bayesian_model, labels_list):
     image_name = image_path.split('/')[-1]
     labels = []
 
-    # # if image is from collection, get the labels from the dictionary
-    # if image_name in image_label_dict.keys():
-    #     labels = image_label_dict[image_name]
-    # # else get the labels from the Google Vision API
-    # else:
-    #     labels = image_preprocessing.detect_labels(image_path)
-    labels = ['people', 'friendship', 'fun', 'event', 'drinking', 'happy', 'picnic', 'recreation', 'smile', 'leisure']
+    # if image is from collection, get the labels from the dictionary
+    if image_name in image_label_dict.keys():
+        labels = image_label_dict[image_name]
+    # else get the labels from the Google Vision API
+    else:
+        labels = image_preprocessing.detect_labels(image_path)
+
+    # labels = ['people', 'friendship', 'fun', 'event', 'drinking', 'happy', 'picnic', 'recreation', 'smile', 'leisure']
 
     print("RadhaKrishna")
     print(labels)
@@ -38,10 +44,18 @@ def classify_image(image_path, cnn_model, bayesian_model, labels_list):
     # preprocess the image
     image_preprocessing.preprocess(os.getcwd() + "/app/static/input/", image_path)
 
-    # get mean cnn predictions for the faces from the image
+    # Gets the following using the CNN model -
+    # i. label of the predicted emotion for the whole image
+    # ii. mean cnn predictions for all the faces in the image
+    # iii. cnn predictions for each individual face in the image
+    # iv. a boolean that specifies whether any faces were detected in the image
     cnn_label, cnn_dict, cnn_individual_dict, faces_detected = cnn.predict_image(cnn_model, os.getcwd() + "/app/static/input/Aligned/", image_path)
 
-    # get the bayesian and bayesian + cnn predictions for the image
+    # Gets the following using the Bayesian model -
+    # i. label of the predicted emotion for the whole image (using the Bayesian Network)
+    # ii. label of the predicted emotion for the whole image (using the Bayesian Network + CNN as a node)
+    # iii. Bayesian predictions for the whole image
+    # iv. Bayesian + CNN predictions for the whole image
     bayesian_label, bayesian_cnn_label, emotion_dict, emotion_cnn_dict = bayesian_network.inference(bayesian_model, labels_list, labels, cnn_label)
 
     print("Faces detected: " + str(faces_detected))
@@ -49,5 +63,9 @@ def classify_image(image_path, cnn_model, bayesian_model, labels_list):
     print("Bayesian Label: " + str(bayesian_label))
     print("Bayesian + CNN Label: " + str(bayesian_cnn_label))
     
-    # return the bayesian, cnn and bayesian + cnn predictions
+    # return 
+    # i. the bayesian predictions
+    # ii. cnn + bayesian predictions
+    # iii. cnn predictions for the group
+    # iv. cnn predictions for each detected face
     return emotion_dict, emotion_cnn_dict, cnn_dict, cnn_individual_dict

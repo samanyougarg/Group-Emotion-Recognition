@@ -1,4 +1,3 @@
-# #### 3.4 Dlib Align Class
 # Copyright 2015-2016 Carnegie Mellon University
 #
 # Licensed under the Apache License, Version 2.0 (the "License");

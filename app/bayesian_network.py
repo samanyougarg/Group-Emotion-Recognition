@@ -1,11 +1,8 @@
+"""Module to predict the emotions for a group image using a Bayesian model."""
+
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Bayesian Network
-
-# ## 1. Setup
-
-# ### 1.1 Import Required Libraries
 import numpy as np
 import pandas as pd
 from pgmpy.models import BayesianModel
@@ -15,11 +12,15 @@ from sklearn.preprocessing import normalize
 from copy import deepcopy
 import os
 
+# class mapping
 classes = {0: 'Positive', 1: 'Negative', 2: 'Neutral'}
+# reverse class mapping
 reverse_classes = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
 
+# function to load the Bayesian model
 def load_model():
-    # ### 1.2 Prepare and read the labels histogram file
+    # 1. Prepare and read the labels histogram file
+
     # Assign the file to a variable
     labels_histogram = os.getcwd() + '/app/labels_histogram.xlsx'
 
@@ -31,16 +32,18 @@ def load_model():
     # print the first 5 rows of the dataframe
     df.head()
 
+    # -----------------------------------------------------------------
 
-    # ## 2. Prepare data for the Bayesian Network
+    # 2. Prepare data for the Bayesian Network
 
-    # ### 2.1 List of labels
+    # List of labels
     # first column of the dataframe
     # skip last row i.e. "total"
     labels_list = df['label'][:-1]
 
 
-    # ### 2.2 Count total Positive, Negative and Neutral emotions
+    # Count total Positive, Negative and Neutral emotions
+
     # get the value of the last row in the positive column of the dataframe
     total_positive_labels = df['positive'].iloc[-1]
 
@@ -51,7 +54,8 @@ def load_model():
     total_negative_labels = df['negative'].iloc[-1]
 
 
-    # ### 2.3 Frequencies of Positive, Negative and Neutral emotions for each label
+    # Frequencies of Positive, Negative and Neutral emotions for each label
+
     # get the column with the name "positive" as a numpy array
     # skip last row
     positive_ndarray = np.array(df['positive'][:-1])
@@ -64,37 +68,37 @@ def load_model():
     # skip last row
     negative_ndarray = np.array(df['negative'][:-1])
 
+    # -----------------------------------------------------------------
 
-    # ## 3. Model
+    # 3. Model
 
-    # ### 3.1 Define the edges for the model
+    # Define the edges for the model
+
     # edge from Emotion node to each label node i.e. 809 edges
     edges_list = [("Emotion", label) for label in labels_list]
     # edge from Emotion node to CNN node
     edges_list.append(("Emotion", "CNN"))
 
-
-    # ### 3.2 Define the Model
+    # Define the Model
     model = BayesianModel()
 
-
-    # ### 3.3 Add nodes and edges to the model
+    # Add nodes and edges to the model
     # Add all the labels from labels_list as nodes
     model.add_nodes_from(labels_list)
     # Add all the edges from edges_list
     model.add_edges_from(edges_list)
 
 
-    # ### 3.4 Create the Conditional Probability Distribution Table for the Emotion node
+    # Create the Conditional Probability Distribution Table for the Emotion node
     # Name of the node is "Emotion"
     # Total variables = 3 i.e. 1 for each emotion
     # Since, each emotion is equally likely so each will have 1/3 probability
     emotion_cpd = TabularCPD("Emotion", 3, values=[[1./3,1./3,1./3]])
 
 
-    # ### 3.5 Create the Conditional Probability Distribution Table for the CNN node
+    # Create the Conditional Probability Distribution Table for the CNN node
 
-    # #### 3.5.1 Calculate the conditional probability values using the confusion matrix obtained from the CNN
+    # Calculate the conditional probability values using the confusion matrix obtained from the CNN
     # Store the confusion matrix obtained from CNN as a numpy array
     cnn_confusion_matrix = np.array([[470.0,92.0,198.0],
                                     [38.0, 336.0, 130.0],
@@ -111,7 +115,7 @@ def load_model():
     cnn_cpd = TabularCPD("CNN", 3, evidence=['Emotion'], evidence_card=[3], values=cnn_values)
 
 
-    # ### 3.6 Create Conditional Probability Distribution Tables for each Label node
+    # Create Conditional Probability Distribution Tables for each Label node
 
     # create a list to store each label cpd
     label_cpd_list = []
@@ -123,6 +127,18 @@ def load_model():
         p_label_1_given_emo_neutral = float(neutral_ndarray[i]/total_neutral_labels)
         # P(label=1|Emotion=Negative)
         p_label_1_given_emo_negative = float(negative_ndarray[i]/total_negative_labels)
+
+        # if P(label=1|Emotion=Positive) is 0, set it to 0.0001 to fix the error
+        if p_label_1_given_emo_positive == 0.0:
+            p_label_1_given_emo_positive = 0.0001
+        
+        # if P(label=1|Emotion=Neutral) is 0, set it to 0.0001 to fix the error
+        if p_label_1_given_emo_neutral == 0.0:
+            p_label_1_given_emo_neutral = 0.0001
+
+        # if P(label=1|Emotion=Negative) is 0, set it to 0.0001 to fix the error  
+        if p_label_1_given_emo_negative == 0.0:
+            p_label_1_given_emo_negative = 0.0001
         
         # P(label=0|Emotion=Positive)
         p_label_0_given_emo_positive = 1.0 - p_label_1_given_emo_positive
@@ -154,7 +170,7 @@ def load_model():
         label_cpd_list.append(label_cpd)
 
 
-    # ### 3.7 Add Conditional Probability Tables to the Model
+    # Add Conditional Probability Tables to the Model
 
     # Add the emotion and CNN nodes to the model
     model.add_cpds(emotion_cpd, cnn_cpd)
@@ -162,25 +178,28 @@ def load_model():
     for label_cpd in label_cpd_list: model.add_cpds(label_cpd)
 
 
-    # ### 3.8 Check if model is valid
-
+    # Check if model is valid
     print(model.check_model())  # returns True if the model is correct
 
     # print the first 10 cpds from the model
     model.get_cpds()[:10]
 
+    # return
+    # 1. the model
+    # 2. the labels list
     return model, labels_list
 
 
+# function to perform inference on the Bayesian network
 def inference(model, labels_list, labels_for_image, cnn_prediction=None):
-    # ## 4. Inference
-
-    # ### 4.1 Set evidences for the nodes using results from Vision API and CNN
+    # Set evidences for the nodes using results from Vision API and CNN
 
     # if detected label is present in labels list then set that label to 1 else 0
     label_evidences = {label:(1 if label in labels_for_image else 0) for label in labels_list}
 
-    # #### 4.2 Initialize Variable Elimination and query
+
+    # Initialize Variable Elimination and query
+
     # Set the inference method
     emotion_infer = VariableElimination(model)
 
@@ -188,18 +207,28 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
     q = emotion_infer.query(['Emotion'], evidence=label_evidences)
     print(q['Emotion'])
 
+    # set bayes_prediction and bayes + cnn prediction to None
     bayes_prediction, bayes_cnn_prediction = None, None
+    # a dictionary to store emotion predictions predicted by the Bayesian network
     emotion_dict = {'Positive': 0, 'Negative': 1, 'Neutral': 2}
+
+    # predictions for the emotions
     emotion_preds = q['Emotion'].values
     
+    # set the probability for Positive emotion for the image
     emotion_dict['Positive'] = round(emotion_preds[0], 4)
+    # set the probability for Negative emotion for the image
     emotion_dict['Negative'] = round(emotion_preds[1], 4)
+    # set the probability for Neutral emotion for the image
     emotion_dict['Neutral'] = round(emotion_preds[2], 4)
 
+    # a dictionary to store emotion predictions predicted by the Bayesian network + CNN node
     emotion_cnn_dict = deepcopy(emotion_dict)
     
+    # set bayes prediction to be the class with the highest probability
     bayes_prediction = classes[np.argmax(emotion_preds)]
 
+    # if the CNN prediction is not None
     if cnn_prediction is not None:
         # get prediction from CNN
         label_evidences['CNN'] = reverse_classes[cnn_prediction]
@@ -208,10 +237,21 @@ def inference(model, labels_list, labels_for_image, cnn_prediction=None):
         q = emotion_infer.query(['Emotion'], evidence=label_evidences)
         print(q['Emotion'])
         emotion_preds = q['Emotion'].values
+
+        # set the probability for Positive emotion for the image
         emotion_cnn_dict['Positive'] = round(emotion_preds[0], 4)
+        # set the probability for Negative emotion for the image
         emotion_cnn_dict['Negative'] = round(emotion_preds[1], 4)
+        # set the probability for Neutral emotion for the image
         emotion_cnn_dict['Neutral'] = round(emotion_preds[2], 4)
+        # set bayes + CNN prediction to be the class with the highest probability
         bayes_cnn_prediction = classes[np.argmax(emotion_preds)]
     else:
         bayes_cnn_prediction = bayes_prediction
+
+    # return -
+    # i. label of the predicted emotion for the whole image (using the Bayesian Network)
+    # ii. label of the predicted emotion for the whole image (using the Bayesian Network + CNN as a node)
+    # iii. Bayesian predictions for the whole image
+    # iv. Bayesian + CNN predictions for the whole image
     return bayes_prediction, bayes_cnn_prediction, emotion_dict, emotion_cnn_dict
