@@ -1,3 +1,5 @@
+"""Module to preprocess images."""
+
 #!/usr/bin/env python
 # coding: utf-8
 
@@ -8,6 +10,7 @@ import glob
 import numpy as np
 from AlignDlib import AlignDlib
 import io
+from mtcnn.mtcnn import MTCNN
 
 # ## Face and Label Detection
 
@@ -130,15 +133,15 @@ def preprocess_google(image_file):
 
 # ---
 
-# ### 2. Using OpenCV DNN
+# ### 2. Using OpenCV
 
-# #### 2.1 Load the serialized model from disk
+# #### 2.1 Load the serialized DNN model from disk
 net = cv2.dnn.readNetFromCaffe('deploy.prototxt.txt',
                                'res10_300x300_ssd_iter_140000.caffemodel'
                                )
 
 
-# #### 2.2 Function to detect and crop faces
+# #### 2.2 Function to detect and crop faces using OpenCV DNN
 def extract_faces_cv_dnn(image_file, cropped_images_path):
     # load the input image and construct an input blob for the image
     # by resizing to a fixed 300x300 pixels and then normalizing it
@@ -178,9 +181,11 @@ def extract_faces_cv_dnn(image_file, cropped_images_path):
             cropped_image.save(cropped_images_path + image_name + "_face_" + str(count) + ".jpg")
             count+=1
 
-# Create the haar cascade
+
+# #### 2.3 Load the Haar Cascade model
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
+# #### 2.4 Function to detect and crop faces using Haar Cascade
 def extract_faces_cv(image_file, cropped_images_path):
     # Read the image
     image = cv2.imread(image_file)
@@ -210,7 +215,8 @@ def extract_faces_cv(image_file, cropped_images_path):
         count+=1
     return count
 
-# #### 2.3 Function to resize the cropped faces
+
+# #### 2.5 Function to resize the cropped faces
 def resize_faces_cv(cropped_images_path, scaled_images_path, size):
     count = 1
     # for each image in the cropped images path
@@ -239,19 +245,52 @@ def preprocess_cv(image_file):
 
 # ---
 
-# ### 3. Using Dlib
+# ### 3. Using MTCNN
 
-# #### 3.1 Import Dlib
-import dlib
+# #### 3.1 Initialize the MTCNN detector
+mtcnn = MTCNN()
 
 # #### 3.2 Function to detect and crop faces
+def extract_faces_mtcnn(image_file, cropped_images_path):
+    # Read the image
+    image = cv2.imread(image_file)
+
+    # detect faces
+    faces = mtcnn.detect_faces(image)
+
+    count = 0
+    image = Image.open(image_file)
+    
+    if faces is None:
+        print("No face detected in the image.")
+        return
+
+    # loop over the faces
+    for face in faces:
+        bounding_box = face['box']
+        # crop the face in the image
+        cropped_image = image.crop((bounding_box[0], bounding_box[1], bounding_box[0]+bounding_box[2], bounding_box[1]+bounding_box[3]))
+        image_name = (image_file.split("/")[-1])[:-4]
+        cropped_image.save(cropped_images_path + image_name + "_face_" + str(count) + ".jpg")
+        count+=1
+    return count
+
+
+ # ---
+
+# ### 4. Using Dlib
+
+# #### 4.1 Import Dlib
+import dlib
+
+# #### 4.2 Function to detect and crop faces
 # dlib hog + svm based face detector
 detector = dlib.get_frontal_face_detector()
 
 def extract_faces(image_file, cropped_images_path):
     # load input image
     image = cv2.imread(image_file)
-    count = 1
+    count = 0
     # get the image height and width
     image_height, image_width = image.shape[:2]
     
@@ -272,9 +311,10 @@ def extract_faces(image_file, cropped_images_path):
         # save the cropped image
         cv2.imwrite(cropped_images_path + image_name + "_face_" + str(count) + ".jpg", cropped_image)
         count+=1
+    return count
 
 
-# #### 3.3 Function to resize the cropped faces
+# #### 4.3 Function to resize the cropped faces
 def resize_faces(image_file, cropped_images_path, scaled_images_path, size):
     count = 1
     # for each image in the cropped images path
@@ -297,7 +337,8 @@ def resize_faces(image_file, cropped_images_path, scaled_images_path, size):
             # save the scaled image
             cv2.imwrite(scaled_images_path + image_name, resized)
 
-# #### 3.5 Function to align the faces
+
+# #### 4.4 Function to align the faces
 align_dlib = AlignDlib('shape_predictor_68_face_landmarks.dat')
 
 def align_faces(image_file, scaled_images_path, aligned_images_path):
@@ -326,16 +367,12 @@ def align_faces(image_file, scaled_images_path, aligned_images_path):
                 cv2.imwrite(aligned_images_path + image_name, image)
 
 
-# #### 3.6 Apply preprocessing to the dataset using the functions above
+# #### 4.5 Apply preprocessing to the dataset using the functions above
 def preprocess(data_dir, image_file):
     # detect and crop faces in the image
     faces_count = extract_faces(data_dir + image_file, data_dir + "Faces/")
     if faces_count == 0:
-        print("OpenCV")
-        faces_count = extract_faces_cv(data_dir + image_file, data_dir + "Faces/")
-    if faces_count == 0:
-        print("OpenCV DNN")
-        extract_faces_cv_dnn(data_dir + image_file, data_dir + "Faces/")
+        extract_faces_mtcnn(data_dir + image_file, data_dir + "Faces/")
     # resize the cropped faces and save in "Scaled" directory
     resize_faces(data_dir + image_file, data_dir + "Faces/", data_dir + "Scaled/", 64)
     # align the scaled faces and save in "Aligned" directory

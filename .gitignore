@@ -109,3 +109,5 @@ Scaled/
 test/
 Aligned/
 input/
+models/
+model.h5
