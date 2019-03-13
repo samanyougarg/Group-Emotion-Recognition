@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         }
         webView.setWebViewClient(new Callback());
 
-        webView.loadUrl("https://emotionrecognition.samanyougarg.com");
+        webView.loadUrl("https://emotion-recognition.samanyougarg.com");
 
         webView.setWebChromeClient(new WebChromeClient() {
             /*
