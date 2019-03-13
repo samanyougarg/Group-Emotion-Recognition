@@ -1,3 +1,5 @@
+"""Module to evaluate full pipeline on 100 images of each class of the validation set."""
+
 #!/usr/bin/env python
 # coding: utf-8
 

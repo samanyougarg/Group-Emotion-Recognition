@@ -1,4 +1,8 @@
-"""Module to classify an image as Positive, Negative or Neutral."""
+"""Module to classify an image as Positive, Negative or Neutral.
+
+    python classify_image.py input/val/Positive/ Positive
+
+"""
 
 #!/usr/bin/env python
 # coding: utf-8
@@ -27,14 +31,14 @@ image_label_dict = {
 # function to classify an image
 def classify_image(image_folder_path, image_name, real_label, cnn_model, bayesian_model, labels_list):
     # if image is from collection, get the labels from the dictionary
-    # if image_name in image_label_dict.keys():
-    #     print("RadhaKrishna")
-    #     labels = image_label_dict[image_name]
-    # # else get the labels from the Google Vision API
-    # else:
-    #     labels = image_preprocessing.detect_labels("input/" + image_name)
+    if image_name in image_label_dict.keys():
+        print("RadhaKrishna")
+        labels = image_label_dict[image_name]
+    # else get the labels from the Google Vision API
+    else:
+        labels = image_preprocessing.detect_labels("input/" + image_name)
 
-    labels = ['people', 'friendship', 'fun', 'event', 'drinking', 'happy', 'picnic', 'recreation', 'smile', 'leisure']
+    # labels = ['people', 'friendship', 'fun', 'event', 'drinking', 'happy', 'picnic', 'recreation', 'smile', 'leisure']
 
     print("RadhaKrishna")
     print(labels)
@@ -71,7 +75,7 @@ def main(image_folder_path, real_label):
     # load the bayesian model
     bayesian_model, labels_list = bayesian_network.load_model()
     # for each image in the test path
-    for file in sorted(glob.glob(image_folder_path + "pos_1000.jpg")):
+    for file in sorted(glob.glob(image_folder_path + "*.jpg")):
         # extract the image name from the image path
         image_name = (file.split('/'))[-1]
         print("Image: " + image_name)
