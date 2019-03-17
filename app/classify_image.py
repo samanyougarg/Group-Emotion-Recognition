@@ -20,7 +20,9 @@ image_label_dict = {
     "image_happy_neutral_4.jpg": ['people', 'child', 'smile', 'community', 'youth', 'friendship', 'adaptation', 'fun', 'happy', 'event'],
     "image_neutral_sad.jpg": ['hair', 'face', 'chin', 'hairstyle', 'cool', 'forehead', 'black hair', 'fun', 'neck', 'smile'],
     "image_neutral.jpg": ['face', 'people', 'facial expression', 'child', 'smile', 'skin', 'fun', 'child model','human', 'happy'],
-    "image_sad_1.jpg": ['people', 'community', 'tribe', 'adaptation', 'tradition', 'event', 'child', 'smile', 'tourism', 'turban']
+    "image_sad_1.jpg": ['people', 'community', 'tribe', 'adaptation', 'tradition', 'event', 'child', 'smile', 'tourism', 'turban'],
+    "image_negative_1.jpg": ['military', 'military uniform', 'people', 'parade', 'uniform', 'troop', 'marching', 'army', 'military officer', 'military organization'],
+    "image_negative_2.jpg": ['army', 'soldier', 'military', 'military uniform', 'troop', 'people', 'military organization', 'infantry', 'military person', 'military camouflage']
 }
 
 # function to classify an image
