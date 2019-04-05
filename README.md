@@ -2,6 +2,36 @@
 
 This project aims to classify a group’s perceived emotion as Positive, Neutral or Negative. The dataset being used is the [Group Affect Database 3.0](https://sites.google.com/view/emotiw2018) which contains "in the wild" photos of groups of people in various social environments.
 
+## Instructions
+
+This repository consists of 3 branches - 
+1. `master` - contains the code used to train and test the model.
+2. `webapp` - contains the webapp.
+3. `android` - contains the android app.
+
+### 1. master branch
+
+#### 1.1 To classify an image (or a set of images) using the full pipeline
+
+1. Fork this repository and clone the forked repository.
+2. Create and activate a Python 3 virtualenv.
+3. Use `pip install -r requirements.txt` to install the requirements.
+4. Download the final ensemble CNN model from [here](https://drive.google.com/open?id=1dkk7K_R16fW7T0ETsaaG5lT0PZG8K7uE) and model architecture from [here](https://drive.google.com/open?id=1vAR-_QIPpAVYBWNlg6E_CJ1FGnePkW2i) and paste/replace in the cloned repository.
+5. Use `python classify_image.py image_dir original_label` to classify an image as Positive, Neutral or Negative. eg - `python classify_image.py input/val/Positive/ Positive` classifies the images in the `input/val/Positive/` directory with original label as `Positive`.
+
+
+### 2. webapp branch
+
+#### 2.1 To run the web app locally
+
+1. Fork this repository and clone the forked repository. (Ignore if already done in 1.1.)
+2. Use `git checkout webapp` to switch to the webapp branch.
+2. Create and activate a Python 3 virtualenv. (Ignore if already done in 1.1.)
+3. Use `pip install -r requirements.txt` to install the requirements.
+4. `python manage.py runserver` to start the server. Frontend can be accessed at `http://127.0.0.1:5000`
+
+---
+
 ## The Need for Emotion Recognition
 
 So, first of all, why do we need emotion recognition?
