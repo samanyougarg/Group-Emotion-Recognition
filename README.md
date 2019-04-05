@@ -2,6 +2,10 @@
 
 This project aims to classify a group’s perceived emotion as Positive, Neutral or Negative. The dataset being used is the [Group Affect Database 3.0](https://sites.google.com/view/emotiw2018) which contains "in the wild" photos of groups of people in various social environments.
 
+# Download the model
+
+The final ensemble CNN model can be downloaded [here](https://drive.google.com/open?id=1PD53GV7eBbLFMseld356pQeGMuKWoz_n).
+
 ## The Need for Emotion Recognition
 
 So, first of all, why do we need emotion recognition?
