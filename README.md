@@ -4,7 +4,7 @@ This project aims to classify a group’s perceived emotion as Positive, Neutral
 
 # Download the model
 
-The final ensemble CNN model can be downloaded [here](https://drive.google.com/open?id=1PD53GV7eBbLFMseld356pQeGMuKWoz_n).
+The final ensemble CNN model can be downloaded [here](https://drive.google.com/open?id=1dkk7K_R16fW7T0ETsaaG5lT0PZG8K7uE) and model arhitecture can be downloaded [here](https://drive.google.com/open?id=1vAR-_QIPpAVYBWNlg6E_CJ1FGnePkW2i).
 
 ## The Need for Emotion Recognition
 
