@@ -1,6 +1,24 @@
 # Group-Emotion-Recognition
 
+![Python](https://camo.githubusercontent.com/c589348df8bb82948f724198f52725d3d36ce738/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f707974686f6e2d332e782d627269676874677265656e2e737667)
+
 This project aims to classify a group’s perceived emotion as Positive, Neutral or Negative. The dataset being used is the [Group Affect Database 3.0](https://sites.google.com/view/emotiw2018) which contains "in the wild" photos of groups of people in various social environments.
+
+
+
+## Demo
+
+### 1. Video
+[![Youtube Video](http://i.imgur.com/GPgEKL0.png)](https://youtu.be/fQrRjKQeAhM "Youtube Video")
+
+### 2. Apps
+
+[<img src="https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png"
+      alt="Download from Google Play"
+      height="81">](https://play.google.com/store/apps/details?id=com.hanuman.emotionrecognition)
+[<img src="https://i.imgur.com/6B3Qw5s.png"
+      alt="Web App"
+      height="80">](http://emotion-recognition.samanyougarg.com)
 
 ## Instructions
 
