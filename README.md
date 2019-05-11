@@ -4,6 +4,7 @@
 
 This project aims to classify a group’s perceived emotion as Positive, Neutral or Negative. The dataset being used is the [Group Affect Database 3.0](https://sites.google.com/view/emotiw2018) which contains "in the wild" photos of groups of people in various social environments.
 
+Our solution is a hybrid machine learning system that builds on the model by [Surace et al.](https://arxiv.org/abs/1709.03820) and extends it further with additional and more refined machine learning methods and experiments. It has been published in the paper [Group Emotion Recognition Using Machine Learning](https://arxiv.org/pdf/1905.01118.pdf).
 
 
 ## Demo
@@ -74,37 +75,20 @@ Group emotion recognition is a challenging problem due to obstructions like head
 
 ## Approach
 
-My approach is based on the research paper "[Emotion Recognition in the Wild using Deep Neural Networks and Bayesian Classifiers](https://arxiv.org/abs/1709.03820)." So, my solution is a hybrid network that incorporates deep neural networks, and Bayesian classifiers. Deep Convolutional Neural Networks (CNNs) work from bottom to top, analysing facial expressions expressed by individual faces extracted from the image. The Bayesian network works from top to bottom, inferring the global emotion for the image, by integrating the visual features of the contents of the image obtained through a scene descriptor. In the final pipeline, the group emotion category predicted by an ensemble of CNNs in the bottom layer is passed as input to the Bayesian Network in the top layer and an overall prediction for the image is obtained.
+Our solution is a pipeline based approach which integrates two modules (that work in parallel): bottom-up and top-down modules, based on the idea that the emotion of a group of people can be deduced using both bottom-up and top-down approaches.
 
-  
+- The bottom-up module detects and extracts individual faces present in the
+image and passes them as input to an ensemble of pre-trained Deep
+Convolutional Neural Networks (CNNs).
+- Simultaneously, the top-down module detects the labels associated with the
+scene and passes them as input to a Bayesian Network (BN) which predicts
+the probabilities of each class.
+- In the final pipeline, the group emotion category predicted by the bottom-up
+module is passed as input to the Bayesian Network in the top-down module
+and an overall prediction for the image is obtained.
 
+An overview of the full pipeline is shown in the figure below.
 ![Approach](https://emotion-recognition.samanyougarg.com/static/images/method.jpg)
-
-  
-
-### Top-down approach
-
-**Top-down approach** considers the scene context, such as background, environment, clothes, place, etc. It consists of the following steps –
-
-1.  Acquiring the scene descriptors
-    
-2.  Setting evidences in the Bayesian Network
-    
-3.  Estimating the posterior distribution of the Bayesian Network
-    
-
-### Bottom-up approach
-
-**Bottom-up approach** estimates the facial expressions of each individual in the group –
-
-1.  Face detection
-    
-2.  Features pre-processing
-    
-3.  CNN forward pass
-    
-
-The value obtained by the bottom-up module is then used as input to the Bayesian Network in the top layer.
 
 ---
 
