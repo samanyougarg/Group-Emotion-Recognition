@@ -89,7 +89,3 @@ and an overall prediction for the image is obtained.
 
 An overview of the full pipeline is shown in the figure below.
 ![Approach](https://emotion-recognition.samanyougarg.com/static/images/method.jpg)
-
----
-
-राधे राधे 🕉️🕉️
