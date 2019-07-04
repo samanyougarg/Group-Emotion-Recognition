@@ -89,5 +89,3 @@ My approach is based on the research paper "[Emotion Recognition in the Wild usi
 The value obtained by the bottom-up module is then used as input to the Bayesian Network in the top layer.
 
 ---
-
-राधे राधे 🕉️🕉️
