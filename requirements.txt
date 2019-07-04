@@ -62,7 +62,7 @@ ipython-genutils==0.2.0
 ipywidgets==7.4.2
 itsdangerous==1.1.0
 jedi==0.13.1
-Jinja2==2.10
+Jinja2==2.10.1
 joblib==0.12.5
 jsmin==2.2.2
 jsonpickle==1.1
@@ -89,7 +89,7 @@ mtcnn==0.0.8
 nbconvert==5.4.0
 nbformat==4.4.0
 networkx==1.11
-notebook==5.7.0
+notebook>=5.7.2
 numpy==1.15.4
 oauthlib==2.1.0
 opencv-contrib-python==3.4.3.18
@@ -134,7 +134,7 @@ scipy==1.1.0
 Send2Trash==1.5.0
 six==1.12.0
 snowballstemmer==1.2.1
-SQLAlchemy==1.2.16
+SQLAlchemy==1.3.5
 tensorboard==1.12.0
 tensorflow==1.13.0rc1
 tensorflow-estimator==1.13.0rc0
@@ -148,7 +148,7 @@ tornado==5.1.1
 tqdm==4.31.1
 traitlets==4.3.2
 tzlocal==1.5.1
-urllib3==1.24.1
+urllib3==1.25.3
 wcwidth==0.1.7
 webassets==0.12.1
 webencodings==0.5.1
