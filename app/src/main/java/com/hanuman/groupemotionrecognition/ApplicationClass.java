@@ -1,4 +1,4 @@
-package com.hanuman.emotionrecognition;
+package com.hanuman.groupemotionrecognition;
 
 import android.app.Application;
 

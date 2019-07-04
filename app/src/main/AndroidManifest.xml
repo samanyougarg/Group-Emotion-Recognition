@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hanuman.emotionrecognition">
+    package="com.hanuman.groupemotionrecognition">
     <!-- Necessary permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,8 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:name="com.hanuman.emotionrecognition.ApplicationClass">
-        <activity android:name="com.hanuman.emotionrecognition.MainActivity"
+        android:name="com.hanuman.groupemotionrecognition.ApplicationClass">
+        <activity android:name="com.hanuman.groupemotionrecognition.MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme">
             <intent-filter>

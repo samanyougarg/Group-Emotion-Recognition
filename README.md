@@ -1,38 +1,63 @@
-# Android-PWA-Wrapper
+# Group-Emotion-Recognition
 
-A sample Android Wrapper application to create a native Android App from an offline-capable Progressive Web App.
+This project aims to classify a group’s perceived emotion as Positive, Neutral or Negative. The dataset being used is the [Group Affect Database 3.0](https://sites.google.com/view/emotiw2018) which contains "in the wild" photos of groups of people in various social environments.
 
-Drafted for the [Android App](https://play.google.com/store/apps/details?id=at.xtools.leasingrechner&utm_source=github.com&utm_medium=link&utm_campaign=store_visit) of my [Leasing Calculator](https://www.leasingrechnen.at) Web App using [React](https://github.com/facebook/react), [Redux](https://github.com/reactjs/redux), [Materialize.css](https://github.com/Dogfalo/materialize) and a lot of Offline-First love over at [leasingrechnen.at](https://www.leasingrechnen.at).
+## The Need for Emotion Recognition
 
-## Why would I use a wrapper?
-I know, using a Wrapper-App to display a Website can feel a bit odd. But there are a few good reasons why you'd package your Web App like this.
-- If you've got a very sophisticated UI already, it might make sense not to rebuild it from scratch for multiple platforms, especally if it's a Single Page Application already, that doesn't "feel" like a Website.
-- There might be as well less competition for a given niche on App Stores, in comparison to Google directly. With [leasingrechnen.at](https://www.leasingrechnen.at), I've got easily into the Top 10 Apps on Google Play for my country, whereas Google Search put me on page 9 as the Site is relatively new.
+So, first of all, why do we need emotion recognition?
 
-## What it does
-- Sets up a WebView just the way PWAs/SPAs like it (e.g. enables App cache and DOM storage, ...).
-- Shows a loading spinner while fetching the Web App.
-- Provided your Web App is Offline-capable, it only needs an Internet connection on the first startup. If this fails, it shows a native refresh widget.
-- Opens all external URLs in the device's Browser instead.
-- Checks for Internet connection and fetches Updates for your Web App accordingly.
-- Is compatible down to JellyBean, although it's recommended to build for SDK Version >= 19 (KitKat). Building for SDK Version >= 21 (Lollipop) puts you on the safe side without having to worry too much about Browser support.
-- APK-size < 1.4 MB. The latest cat video from WhatsApp weighs heavier ;)
+Emotion recognition is important -
 
-## How to build your own
-- Clone/fork repository
-- Put your Web App's URL in _WEBAPP_URL_ in `Constants.java`
-- Replace *app_name* in `strings.xml` with the name of your App
-- Add your own primary colors to `colors.xml` (*colorPrimary, colorPrimaryDark, colorPrimaryLight*)
-- Put your own icons in place:
-    - Add your own _ic_launcher.png_ and _ic_launcher_round.png_ in the `mipmap` folders
-    - Add your own _ic_appbar.png_ in the `drawables` folders. This is displayed in Android's _Recent Apps_ View on your app bar, so it should look nicely when placed on top of your primary color.
-    - I recommend using [Android Asset Studio](https://romannurik.github.io/AndroidAssetStudio) to get the icons ready in no time
-- Change the package name in `app/build.gradle`, *applicationId*
-- Change `AndroidManifest.xml` -> `aplication` -> `activity` -> `intent-filter` to your own URLs/schemes/patterns/etc. or remove the `intent-filter` for `android.intent.action.VIEW` altogether
-- Check `Constants.java` for more options
-- Build App in Android Studio
+*   To improve the user’s experience, as a customer, learner, or as a generic service user.
+*   Can help improve services without the need to formally and continuously ask the user for feedback.
+*   Also, using automatic emotion recognition in public safety, healthcare, or assistive technology, can significantly improve the quality of people’s lives, allowing them to live in a safer environment or reducing the impact that disabilities or other health conditions have.
 
-### I don't accept Feature Requests, only Pull Requests :)
+## Applications of Emotion Recognition
 
-## License
-[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) - if you use it, we wanna see it!
+Emotion Recognition has applications in crowd analytics, social media, marketing, event detection and summarization, public safety, human-computer interaction, digital security surveillance, street analytics, image retrieval, etc.
+
+## The rise of Group Emotion Recognition
+
+The problem of emotion recognition for a group of people has been less extensively studied, but it is gaining popularity due to the massive amount of data available on social networking sites containing images of groups of people participating in social events.
+
+## Challenges facing Group Emotion Recognition
+
+Group emotion recognition is a challenging problem due to obstructions like head and body pose variations, occlusions, variable lighting conditions, variance of actors, varied indoor and outdoor settings and image quality.
+
+## Approach
+
+My approach is based on the research paper "[Emotion Recognition in the Wild using Deep Neural Networks and Bayesian Classifiers](https://arxiv.org/abs/1709.03820)." So, the model is basically a novel combination of deep neural networks and Bayesian classifiers. The neural network works from the bottom to the top, analysing emotions expressed by isolated faces. The Bayesian classifier estimates a global emotion integrating top-down features obtained through a scene descriptor.
+
+  
+
+![Approach](https://emotion-recognition.samanyougarg.com/static/images/method.jpg)
+
+  
+
+### Top-down approach
+
+**Top-down approach** considers the scene context, such as background, clothes, place, etc. It consists of the following steps –
+
+1.  Acquiring the scene descriptors
+    
+2.  Setting evidences in the Bayesian Network
+    
+3.  Estimating the posterior distribution of the Bayesian Network
+    
+
+### Bottom-up approach
+
+**Bottom-up approach** estimates the facial expressions of each person in the group –
+
+1.  Face detection
+    
+2.  Features pre-processing
+    
+3.  CNN forward pass
+    
+
+The value obtained by the bottom-up module is then used as input to the Bayesian Network in the top layer.
+
+---
+
+राधे राधे 🕉️🕉️
