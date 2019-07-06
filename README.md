@@ -19,7 +19,7 @@ Our solution is a hybrid machine learning system that builds on the model by [Su
       height="81">](https://play.google.com/store/apps/details?id=com.hanuman.groupemotionrecognition)
 [<img src="https://i.imgur.com/6B3Qw5s.png"
       alt="Web App"
-      height="80">](http://emotion-recognition.samanyougarg.com)
+      height="80">](https://group-emotion-recognition.hackeryogi.com/)
 
 ## Instructions
 
