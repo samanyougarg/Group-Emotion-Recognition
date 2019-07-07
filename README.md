@@ -26,7 +26,7 @@ Group emotion recognition is a challenging problem due to obstructions like head
 
 ## Approach
 
-My approach is based on the research paper "[Emotion Recognition in the Wild using Deep Neural Networks and Bayesian Classifiers](https://arxiv.org/abs/1709.03820)." So, my solution is a hybrid network that incorporates deep neural networks, and Bayesian classifiers. Deep Convolutional Neural Networks (CNNs) work from bottom to top, analysing facial expressions expressed by individual faces extracted from the image. The Bayesian network works from top to bottom, inferring the global emotion for the image, by integrating the visual features of the contents of the image obtained through a scene descriptor. In the final pipeline, the group emotion category predicted by an ensemble of CNNs in the bottom layer is passed as input to the Bayesian Network in the top layer and an overall prediction for the image is obtained.
+My approach is based on the research paper "[Emotion Recognition in the Wild using Deep Neural Networks and Bayesian Classifiers](https://arxiv.org/abs/1709.03820)." So, the model is basically a novel combination of deep neural networks and Bayesian classifiers. The neural network works from the bottom to the top, analysing emotions expressed by isolated faces. The Bayesian classifier estimates a global emotion integrating top-down features obtained through a scene descriptor.
 
   
 
@@ -36,7 +36,7 @@ My approach is based on the research paper "[Emotion Recognition in the Wild usi
 
 ### Top-down approach
 
-**Top-down approach** considers the scene context, such as background, environment, clothes, place, etc. It consists of the following steps –
+**Top-down approach** considers the scene context, such as background, clothes, place, etc. It consists of the following steps –
 
 1.  Acquiring the scene descriptors
     
@@ -47,7 +47,7 @@ My approach is based on the research paper "[Emotion Recognition in the Wild usi
 
 ### Bottom-up approach
 
-**Bottom-up approach** estimates the facial expressions of each individual in the group –
+**Bottom-up approach** estimates the facial expressions of each person in the group –
 
 1.  Face detection
     
