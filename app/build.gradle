@@ -23,7 +23,7 @@ android {
         applicationId "com.hanuman.groupemotionrecognition"
         minSdkVersion 20
         targetSdkVersion 28
-        versionCode 2
+        versionCode 3
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [
