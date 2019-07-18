@@ -4,7 +4,7 @@
     "name": "Group Emotion Recognition",
     "scope": "/",
     "display": "standalone",
-    "start_url": "https://group-emotion-recognition.hackeryogi.com",
+    "start_url": "https://ger.hackeryogi.com/",
     "short_name": "GroupEmotiRec",
     "theme_color": "#A62ABC",
     "description": "An Artificial Intelligence application to recognize the emotions of groups of people in various social environments. Based on a novel combination of deep neural networks and Bayesian classifiers.",
@@ -14,7 +14,7 @@
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "https://group-emotion-recognition.hackeryogi.com/images/static/images/favicon.png",
+            "src": "https://ger.hackeryogi.com/static/images/favicon.png",
             "type": "image/png",
             "sizes": "512x512"
         }

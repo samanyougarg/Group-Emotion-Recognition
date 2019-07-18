@@ -60,7 +60,7 @@ My approach is based on the research paper "[Emotion Recognition in the Wild usi
 
   
 
-![Approach](https://group-emotion-recognition.hackeryogi.com/static/images/method.jpg)
+![Approach](https://ger.hackeryogi.com/static/images/method.jpg)
 
   
 
