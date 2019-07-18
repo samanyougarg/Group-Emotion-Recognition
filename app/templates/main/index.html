@@ -297,7 +297,14 @@
         <h2>ABOUT THIS PROJECT</h2>
         <div class="row">
           <div class="col-md-12">
-            <p>This project aims to classify a group’s perceived emotion as <font color='#28a745'>Positive</font>, <font color='#ffc107'>Neutral</font> or <font color='#dc3545'>Negative</font>. The dataset being used is the <a href="https://sites.google.com/view/emotiw2018">Group Affect Database 3.0</a> which contains "in the wild" photos of groups of people in various social environments.</p>
+            <p>This project aims to classify a group’s perceived emotion as Positive, Neutral or Negative. The dataset
+              being used is the <a href="https://sites.google.com/view/emotiw2018">Group Affect Database 3.0</a> which
+              contains "in the wild" photos of groups of people in various social environments.</p>
+
+            <p>Our solution is a hybrid machine learning system that builds on the model by <a
+                href="https://arxiv.org/abs/1709.03820">Surace et al.</a> and extends it further with additional and
+              more refined machine learning methods and experiments. It has been published in the paper <a
+                href="https://arxiv.org/pdf/1905.01118.pdf">Group Emotion Recognition Using Machine Learning</a>.</p>
 
             <h3 id="theneedforemotionrecognition">The Need for Emotion Recognition</h3>
 
@@ -327,46 +334,29 @@
 
             <h3 id="approach">Approach</h3>
 
-            <p>My approach is inspired by the research paper "<a href="https://arxiv.org/abs/1709.03820">Emotion Recognition in the Wild using Deep Neural Networks and Bayesian Classifiers</a>." So, my solution is a hybrid network that incorporates deep neural networks, and Bayesian classifiers. Deep Convolutional
-            Neural Networks (CNNs) work from bottom to top, analysing facial expressions expressed by individual faces extracted
-            from the image. The Bayesian network works from top to bottom, inferring the global emotion for the image, by
-            integrating the visual features of the contents of the image obtained through a scene descriptor. In the final pipeline,
-            the group emotion category predicted by an ensemble of CNNs in the bottom layer is passed as input to the Bayesian
-            Network in the top layer and an overall prediction for the image is obtained.</p>
+            <p>Our solution is a pipeline based approach which integrates two modules (that work in parallel): bottom-up
+              and top-down modules, based on the idea that the emotion of a group of people can be deduced using both
+              bottom-up and top-down approaches.</p>
 
-            <br>
+            <ul>
+              <li>The bottom-up module detects and extracts individual faces present in the
+                image and passes them as input to an ensemble of pre-trained Deep
+                Convolutional Neural Networks (CNNs).</li>
 
+              <li>Simultaneously, the top-down module detects the labels associated with the
+                scene and passes them as input to a Bayesian Network (BN) which predicts
+                the probabilities of each class.</li>
+
+              <li>In the final pipeline, the group emotion category predicted by the bottom-up
+                module is passed as input to the Bayesian Network in the top-down module
+                and an overall prediction for the image is obtained.</li>
+            </ul>
+
+            <p>An overview of the full pipeline is shown in the figure below.</p>
+            
             <div class="col-md-8 px-0 ml-auto mr-auto">
               <img class="img-fluid" src="/static/images/method.jpg" alt="Approach">
             </div>
-
-            <br>
-
-            <h4 id="topdownapproach">Top-down approach</h4>
-
-            <p><strong>Top-down approach</strong> considers the scene context, such as background, environment, clothes, place, etc. It consists of the following steps –</p>
-
-            <ol>
-            <li><p>Acquiring the scene descriptors</p></li>
-
-            <li><p>Setting evidences in the Bayesian Network</p></li>
-
-            <li><p>Estimating the posterior distribution of the Bayesian Network</p></li>
-            </ol>
-
-            <h4 id="bottomupapproach">Bottom-up approach</h4>
-
-            <p><strong>Bottom-up approach</strong> estimates the facial expressions of each individual in the group –</p>
-
-            <ol>
-            <li><p>Face detection</p></li>
-
-            <li><p>Features pre-processing</p></li>
-
-            <li><p>CNN forward pass</p></li>
-            </ol>
-
-            <p>The value obtained by the bottom-up module is then used as input to the Bayesian Network in the top layer.</p>
 
           </div>
         </div>
