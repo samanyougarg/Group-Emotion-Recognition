@@ -88,4 +88,4 @@ module is passed as input to the Bayesian Network in the top-down module
 and an overall prediction for the image is obtained.
 
 An overview of the full pipeline is shown in the figure below.
-![Approach](https://emotion-recognition.samanyougarg.com/static/images/method.jpg)
+![Approach](https://ger.hackeryogi.com/static/images/method.jpg)
