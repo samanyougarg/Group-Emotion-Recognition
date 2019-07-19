@@ -557,6 +557,10 @@
     .table td {
       text-align: center;   
     }
+
+    .loading-text {
+      text-align: center;
+    }
     
   </style>
 
@@ -613,11 +617,10 @@
             $.LoadingOverlay("show", {
               image: "",
               fontawesome: "fa fa-cog fa-spin",
-              text: "Loading... (Approx. time 8 secs)"
+              text: "Loading (Est. time: 8secs)",
+              textResizeFactor: 0.2,
+              textClass: "loading-text"
             });
-            setTimeout(function () {
-              $.LoadingOverlay("text", "Yep, still loading...");
-            }, 4500);
             $.ajax({
                 type: 'POST',
                 url: '/process-image/',
