@@ -235,7 +235,7 @@
         <div class="row">
 
           <div class="col-md-5">
-            <h4 class="text-primary"><b>CNN Only</b></h4>
+            <h4 class="text-primary"><b>Method 1 (CNN Only)</b></h4>
             <table class="table table-dark" id="cnn_table">
               <thead>
                 <tr>
@@ -253,7 +253,7 @@
           </div>
 
           <div class="col-md-5">
-            <h4 class="text-primary"><b>Bayesian Network Only</b></h4>
+            <h4 class="text-primary"><b>Method 2 (Bayesian Network Only)</b></h4>
             <table class="table table-dark" id="bayesian_table">
               <thead>
                 <tr>
@@ -276,7 +276,7 @@
 
         <div class="row">
           <div class="col-md-6 ml-auto mr-auto">
-            <h4 class="text-primary"><b>CNN + Bayesian Network</b></h4>
+            <h4 class="text-primary"><b>Combined Method (CNN + Bayesian Network)</b></h4>
             <table class="table table-dark" id="bayesian_cnn_table">
               <thead>
                 <tr>
@@ -611,9 +611,13 @@
             form_data.append('image_set', image_set);
             $('#upload_image').trigger("reset");
             $.LoadingOverlay("show", {
-                image       : "",
-                fontawesome : "fa fa-cog fa-spin"
+              image: "",
+              fontawesome: "fa fa-cog fa-spin",
+              text: "Loading... (Approx. time 8 secs)"
             });
+            setTimeout(function () {
+              $.LoadingOverlay("text", "Yep, still loading...");
+            }, 4500);
             $.ajax({
                 type: 'POST',
                 url: '/process-image/',
