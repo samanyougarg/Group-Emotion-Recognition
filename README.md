@@ -10,7 +10,7 @@ Our solution is a hybrid machine learning system that builds on the model by [Su
 ## Demo
 
 ### 1. Video
-[![Youtube Video](http://i.imgur.com/GPgEKL0.png)](https://youtu.be/fQrRjKQeAhM "Youtube Video")
+[![Youtube Video](http://i.imgur.com/GPgEKL0.png)](https://www.youtube.com/watch?v=-q2u0Xd2oCA "Youtube Video")
 
 ### 2. Apps
 
