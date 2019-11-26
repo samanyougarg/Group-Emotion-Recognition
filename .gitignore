@@ -104,8 +104,15 @@ venv.bak/
 .mypy_cache/
 
 emotiw/
-Faces/
-Scaled/
+# Faces/
+# Scaled/
 test/
-Aligned/
+# Aligned/
 config.env
+
+.DS_Store
+model.json
+model.h5
+app/static/input/Faces/*
+app/static/input/Scaled/*
+app/static/input/Aligned/*
