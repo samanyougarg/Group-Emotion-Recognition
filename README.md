@@ -86,6 +86,3 @@ the probabilities of each class.
 - In the final pipeline, the group emotion category predicted by the bottom-up
 module is passed as input to the Bayesian Network in the top-down module
 and an overall prediction for the image is obtained.
-
-An overview of the full pipeline is shown in the figure below.
-![Approach](https://ger.hackeryogi.com/static/images/method.jpg)
