@@ -62,7 +62,7 @@ ipython-genutils==0.2.0
 ipywidgets==7.4.2
 itsdangerous==1.1.0
 jedi==0.13.1
-Jinja2==2.10.1
+Jinja2==2.11.3
 joblib==0.12.5
 jsmin==2.2.2
 jsonpickle==1.1
