@@ -119,7 +119,7 @@ python-dateutil==2.7.5
 python-editor==1.0.3
 pytz==2018.9
 PyWavelets==1.0.1
-PyYAML==4.2b4
+PyYAML==5.4
 pyzmq==17.1.2
 qtconsole==4.4.2
 raygun4py==4.2.2
