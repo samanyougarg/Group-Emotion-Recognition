@@ -102,7 +102,7 @@ pbr==5.1.2
 pexpect==4.6.0
 pgmpy==0.1.6
 pickleshare==0.7.5
-Pillow==6.2.0
+Pillow==9.0.0
 prometheus-client==0.4.2
 prompt-toolkit==2.0.7
 protobuf==3.6.1
